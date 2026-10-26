@@ -1,0 +1,1405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111511">
+<meta name="description" content="Elion Phones: genuine phones, tablets and accessories with real photos and clear prices.">
+<title>Elion Phones</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>
+/* set the theme before first paint so there is no flash */
+(function () {
+  try {
+    var t = localStorage.getItem('elion_theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+  if (/(^|\/)admin$|#admin/.test(location.pathname + location.hash)) document.documentElement.classList.add('is-admin');
+})();
+</script>
+<style>
+/* Elion Phones storefront. Same layout and look as the original store, with a light and a dark theme. */
+:root{
+  --bg:#f5f6f5;--surface:#fff;--surface2:#f2f3f1;--text:#171a17;--muted:#666;--muted2:#777;
+  --line:#e5e8e3;--line2:#e1e5df;--field:#fafafa;
+  --btn:#151915;--btn-text:#fff;--btn-b:#8be44d;
+  --accent:#8be44d;--accent-text:#4b932b;--accent-soft:#eef8e9;--on-accent:#111;
+  --menu:#111611;--footer:#111611;--shadow:#0001;--shadow2:#00000009;
+  --hero-grad:linear-gradient(90deg,rgba(248,249,247,.98),rgba(248,249,247,.80) 40%,rgba(248,249,247,.15));
+  --hero-fade:#f5f6f5;--hero-p:#4b514b;--danger:#d93025;--ok:#16b95c;--star:#e4a400;
+  --logo-filter:none;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#090b09;--surface:#131713;--surface2:#1b201b;--text:#eef2ec;--muted:#9ba49a;--muted2:#8a938a;
+  --line:#242a24;--line2:#2c332c;--field:#0f120f;
+  --btn:#8be44d;--btn-text:#0a0c0a;--btn-b:#0a0c0a;
+  --accent-text:#8be44d;--accent-soft:#1d2a17;
+  --menu:#0e120e;--footer:#0e120e;--shadow:#0008;--shadow2:#0005;
+  --hero-grad:linear-gradient(90deg,rgba(9,11,9,.96),rgba(9,11,9,.80) 42%,rgba(9,11,9,.35));
+  --hero-fade:#090b09;--hero-p:#b3bbb2;--logo-filter:brightness(0) invert(1);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#090b09;--surface:#131713;--surface2:#1b201b;--text:#eef2ec;--muted:#9ba49a;--muted2:#8a938a;
+  --line:#242a24;--line2:#2c332c;--field:#0f120f;
+  --btn:#8be44d;--btn-text:#0a0c0a;--btn-b:#0a0c0a;
+  --accent-text:#8be44d;--accent-soft:#1d2a17;
+  --menu:#0e120e;--footer:#0e120e;--shadow:#0008;--shadow2:#0005;
+  --hero-grad:linear-gradient(90deg,rgba(9,11,9,.96),rgba(9,11,9,.80) 42%,rgba(9,11,9,.35));
+  --hero-fade:#090b09;--hero-p:#b3bbb2;--logo-filter:brightness(0) invert(1);
+  color-scheme:dark}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;padding-bottom:70px;transition:background .25s,color .25s}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
+img{max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.is-admin #shop{display:none}
+
+/* ---- logo intro ---- */
+.splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
+  background:radial-gradient(120% 90% at 50% 40%,#0b1a3c 0%,#050913 55%,#030508 100%);overflow:hidden}
+.splash.out{animation:splashOut .75s cubic-bezier(.7,0,.2,1) forwards}
+@keyframes splashOut{to{opacity:0;transform:scale(1.06);visibility:hidden}}
+.splash-glow{position:absolute;width:70vmin;height:70vmin;border-radius:50%;background:radial-gradient(circle,rgba(139,228,77,.22),rgba(139,228,77,0) 62%);opacity:0;transform:scale(.4)}
+.sl{position:relative;width:min(78vw,430px);aspect-ratio:729/433}
+.sl-l{position:absolute;inset:0;width:100%;height:100%;filter:brightness(0) invert(1);opacity:0;will-change:transform,opacity}
+.sl-tag,.sl-arc{filter:brightness(0) invert(1) opacity(.62)}
+.sl-arc{filter:brightness(0) invert(1) drop-shadow(0 0 6px rgba(139,228,77,.9))}
+.sl-bar{width:min(46vw,190px);height:3px;border-radius:3px;background:#ffffff1c;overflow:hidden;opacity:0}
+.sl-bar i{display:block;height:100%;width:100%;background:var(--accent);transform:translateX(-100%)}
+.splash.go .splash-glow{animation:glow 2.4s ease-out .1s forwards}
+.splash.go .sl-phone{animation:phoneIn .85s cubic-bezier(.2,1.3,.4,1) .15s forwards}
+.splash.go .sl-eli{animation:fromL .8s cubic-bezier(.2,.9,.2,1) .5s forwards}
+.splash.go .sl-n{animation:fromR .8s cubic-bezier(.2,.9,.2,1) .5s forwards}
+.splash.go .sl-arc{animation:arcDraw .75s cubic-bezier(.5,0,.2,1) 1.05s forwards}
+.splash.go .sl-tag{animation:tagIn .8s ease-out 1.35s forwards}
+.splash.go .sl-bar{animation:fadeIn .3s 1.2s forwards}
+.splash.go .sl-bar i{animation:barRun 1.2s cubic-bezier(.5,0,.2,1) 1.3s forwards}
+@keyframes glow{0%{opacity:0;transform:scale(.4)}40%{opacity:1}100%{opacity:.75;transform:scale(1.15)}}
+@keyframes phoneIn{0%{opacity:0;transform:translateY(46px) scale(.35);filter:brightness(0) invert(1) blur(8px)}100%{opacity:1;transform:none;filter:brightness(0) invert(1) blur(0)}}
+@keyframes fromL{0%{opacity:0;transform:translateX(-70px)}100%{opacity:1;transform:none}}
+@keyframes fromR{0%{opacity:0;transform:translateX(70px)}100%{opacity:1;transform:none}}
+@keyframes arcDraw{0%{opacity:1;clip-path:inset(0 100% 0 0)}100%{opacity:1;clip-path:inset(0 0 0 0)}}
+@keyframes tagIn{0%{opacity:0;transform:scaleX(.7) translateY(8px)}100%{opacity:1;transform:none}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes barRun{to{transform:translateX(0)}}
+
+/* ---- top bar and nav ---- */
+.top{height:5px;background:var(--accent)}
+.nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:0 2px 12px var(--shadow);transition:background .25s}
+.navrow{height:63px;display:flex;align-items:center;gap:8px;padding:7px 11px;max-width:1100px;margin:auto}
+.menu,.icon{border:0;background:transparent;font-size:24px;width:37px;height:40px;flex:none;color:var(--text)}
+.logoLink{display:block;flex:none;line-height:0}
+.logo{height:30px;width:auto;max-width:120px;object-fit:contain;filter:var(--logo-filter)}
+.logo.custom{filter:none;background:#fff;border-radius:8px;padding:3px;height:40px;max-width:100px}
+.search{height:40px;flex:1;min-width:0;max-width:680px;margin-right:auto;border:2px solid var(--btn);border-radius:22px;display:flex;overflow:hidden;background:var(--field)}
+:root[data-theme="dark"] .search{border-color:var(--line2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .search{border-color:var(--line2)}}
+.search input{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:0 13px;font-size:13px;-webkit-appearance:none}
+.search button{width:46px;border:0;background:var(--btn);color:var(--btn-text);font-size:17px;flex:none}
+.cartIcon{position:relative}
+.count{position:absolute;right:-1px;top:0;background:var(--accent);color:var(--on-accent);border-radius:50%;min-width:17px;height:17px;font-size:9px;display:grid;place-items:center;font-weight:900;transition:transform .2s}
+.count.bump{transform:scale(1.4)}
+.themeBtn{font-size:20px;position:relative}
+.themeBtn .ico-moon{display:none}
+:root[data-theme="dark"] .themeBtn .ico-sun{display:none}
+:root[data-theme="dark"] .themeBtn .ico-moon{display:inline}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .themeBtn .ico-sun{display:none}
+  :root:not([data-theme="light"]) .themeBtn .ico-moon{display:inline}}
+.menuPanel{display:none;background:var(--menu);color:#fff;padding:10px 15px}
+.menuPanel.open{display:block}
+.menuPanel div{padding:13px 0;border-bottom:1px solid #303630;font-size:13px;font-weight:800;cursor:pointer}
+@media (max-width:440px){.navrow{gap:4px;padding:7px 8px}.logo{height:25px;max-width:96px}.menu,.icon{width:33px}.search button{width:40px}.search input{padding:0 10px}}
+
+/* ---- hero ---- */
+.hero{position:relative;min-height:540px;background-color:var(--hero-fade);background-size:cover;background-position:center;display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;background:var(--hero-grad);z-index:-1}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,var(--hero-fade));z-index:-1;opacity:.0}
+.heroText{padding:32px 18px 35px;max-width:360px;position:relative;z-index:2}
+.kicker{font-size:11px;font-weight:900;letter-spacing:2px;color:var(--accent-text)}
+.hero h1{font-size:42px;line-height:.94;margin:8px 0 12px;letter-spacing:-2px}
+.hero h1 span{color:var(--accent-text)}
+.hero p{font-size:13px;line-height:1.5;color:var(--hero-p);max-width:270px;margin:0 0 16px}
+.heroBtn{border:0;background:var(--btn);color:var(--btn-text);padding:12px 17px;border-radius:8px;font-weight:900}
+.heroBtn b{color:var(--btn-b)}
+.heroPhone{position:absolute;right:2px;top:2px;width:150px;height:260px;z-index:1;pointer-events:none}
+.heroPhone .stage{pointer-events:auto;touch-action:pan-y;cursor:grab}
+.no3d .heroPhone{display:none}
+
+/* ---- 3D phone ---- */
+.stage{position:relative;width:100%;height:100%;perspective:1100px}
+.phone{position:absolute;left:50%;top:48%;width:150px;height:312px;margin:-156px 0 0 -75px;transform-style:preserve-3d;transform:rotateX(-7deg) rotateY(var(--ry,-28deg)) scale(.74);will-change:transform}
+.face{position:absolute;inset:0;border-radius:30px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.front{transform:translateZ(7px);background:#050607;border:3px solid #6f7783;box-shadow:inset 0 0 0 2px #14171b}
+.back{transform:rotateY(180deg) translateZ(7px);background:linear-gradient(150deg,#e4e8ee 0%,#a9b1bd 38%,#cfd5dd 60%,#8d96a3 100%);border:3px solid #7d8591;overflow:hidden}
+.back::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.55),rgba(255,255,255,0) 35%,rgba(255,255,255,0) 65%,rgba(255,255,255,.25));pointer-events:none}
+.rim{position:absolute;inset:0;border-radius:30px;border:3px solid #7d8591;background:#20242a}
+.screen{position:absolute;inset:6px;border-radius:24px;overflow:hidden;background:#000}
+.slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.08);transition:opacity .9s ease,transform 4s ease}
+.slide.on{opacity:1;transform:scale(1)}
+.shade{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,0) 28%,rgba(0,0,0,0) 55%,rgba(0,0,0,.82))}
+.status{position:absolute;left:0;right:0;top:0;height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#fff;font-size:9px}
+.status b{font-weight:700}
+.island{position:absolute;left:50%;top:6px;width:44px;height:12px;margin-left:-22px;background:#000;border-radius:10px}
+.batt{width:14px;height:7px;border:1px solid #fff;border-radius:2px;position:relative}
+.batt::after{content:"";position:absolute;inset:1px 3px 1px 1px;background:var(--accent);border-radius:1px}
+.cap{position:absolute;left:11px;right:11px;bottom:20px;color:#fff;display:flex;flex-direction:column;gap:2px}
+.cap small{font-size:7px;letter-spacing:2px;color:var(--accent);font-weight:900}
+.cap strong{font-size:13px;line-height:1.15}
+.cap em{font-style:normal;font-size:11px;font-weight:900;color:var(--accent)}
+.home{position:absolute;left:50%;bottom:6px;width:46px;height:3px;margin-left:-23px;background:#fffc;border-radius:3px}
+.cam{position:absolute;left:11px;top:11px;width:66px;height:66px;border-radius:18px;background:rgba(40,46,56,.55);border:2px solid rgba(255,255,255,.35);box-shadow:inset 0 0 8px #0006}
+.cam i{position:absolute;width:25px;height:25px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4a5a78 0,#10151f 45%,#05070a 70%);border:2px solid #9aa3b0}
+.cam i:nth-child(1){left:6px;top:6px}.cam i:nth-child(2){left:6px;top:34px}.cam i:nth-child(3){left:34px;top:20px}
+.cam u{position:absolute;right:5px;top:5px;width:7px;height:7px;border-radius:50%;background:#fff6c9;box-shadow:0 0 6px #fff}
+.mark{position:absolute;left:0;right:0;top:52%;text-align:center;color:#2a3140;display:flex;flex-direction:column;gap:3px;align-items:center}
+.mark b{font-size:19px;letter-spacing:5px;text-shadow:0 1px 0 #ffffff99}
+.mark small{font-size:5px;letter-spacing:2px;opacity:.7}
+.floor{position:absolute;left:50%;bottom:6px;width:120px;height:20px;margin-left:-60px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.4),rgba(0,0,0,0) 70%);filter:blur(4px)}
+
+/* ---- ticker, categories, offer ---- */
+.ticker{height:34px;background:var(--btn);color:var(--btn-text);overflow:hidden;white-space:nowrap;display:flex;align-items:center;font-size:10px;font-weight:900}
+.track{display:inline-flex;gap:38px;animation:slide 22s linear infinite;padding-left:38px}
+.track span{display:inline-block}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.container{max-width:1100px;margin:auto}
+.section{padding:22px 13px 5px}
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.head h2{font-size:21px;margin:0}
+.see{font-size:12px;font-weight:900;color:var(--accent-text);cursor:pointer}
+.categories{display:flex;gap:8px;overflow:auto;scrollbar-width:none;padding-bottom:2px}
+.categories::-webkit-scrollbar{display:none}
+.cat,.chip{border:1px solid var(--line2);background:var(--surface);border-radius:10px;padding:10px 13px;font-size:11px;font-weight:900;white-space:nowrap;transition:.15s}
+.cat.active{background:var(--btn);color:var(--btn-text);border-color:var(--btn)}
+.offer{margin:14px 13px;background:var(--btn);color:var(--btn-text);border-radius:13px;padding:15px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.offer strong{font-size:17px}
+.offer small{display:block;opacity:.7;margin-top:4px}
+.offer button{border:0;background:var(--accent);color:var(--on-accent);border-radius:7px;padding:9px 11px;font-size:11px;font-weight:900;flex:none}
+:root[data-theme="dark"] .offer{background:var(--surface2);color:var(--text);border:1px solid var(--line2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .offer{background:var(--surface2);color:var(--text);border:1px solid var(--line2)}}
+
+.sortRow{display:flex;align-items:center;gap:8px;margin:-4px 0 12px;font-size:11px;font-weight:900;color:var(--muted)}
+.sortRow select{flex:1;max-width:210px;min-width:0;height:34px;border:1px solid var(--line2);border-radius:10px;background:var(--surface);padding:0 8px;font-size:12px}
+.chip[aria-pressed="true"]{background:var(--btn);color:var(--btn-text);border-color:var(--btn)}
+.chip{padding:8px 11px;margin-left:auto}
+
+/* ---- product grid ---- */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.product{background:var(--surface);border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:0 2px 10px var(--shadow2);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;animation:rise .45s both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.product:hover{transform:translateY(-2px)}
+.photo{height:190px;background:var(--surface2);position:relative;overflow:hidden;cursor:zoom-in}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform .35s;display:block}
+.product:hover .photo img{transform:scale(1.04)}
+.stock{position:absolute;right:7px;top:8px;background:var(--ok);color:#fff;padding:5px 7px;border-radius:8px;font-size:9px;font-weight:900;z-index:2}
+.stock.out{background:var(--danger)}
+.fav{position:absolute;left:7px;top:7px;border:0;background:#ffffffdd;color:#222;border-radius:50%;width:31px;height:31px;font-size:21px;z-index:3;line-height:1;padding:0}
+.fav.on{color:#e11}
+.info{padding:10px;display:flex;flex-direction:column;flex:1}
+.tag{font-size:8px;font-weight:900;background:var(--accent-soft);color:var(--accent-text);padding:4px 6px;border-radius:5px;align-self:flex-start}
+.info h3{font-size:13px;margin:7px 0 3px;line-height:1.2}
+.info p{font-size:10px;color:var(--muted);margin:0;min-height:24px;line-height:1.35}
+.stars{color:var(--star);font-size:10px;margin:7px 0}
+.stars small{color:var(--muted2);margin-left:3px}
+.priceRow{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto;padding-top:6px}
+.priceRow strong{font-size:15px}
+.priceRow strong.ask{font-size:12px;color:var(--accent-text)}
+.priceRow s{display:block;font-size:10px;color:var(--muted2);font-weight:400}
+.cartBtn{width:35px;height:35px;border:0;border-radius:50%;background:var(--btn);color:var(--btn-text);font-size:16px;flex:none;transition:transform .15s}
+.cartBtn:active{transform:scale(.9)}
+.cartBtn:disabled{opacity:.35;cursor:not-allowed}
+.empty{text-align:center;padding:35px;color:var(--muted2);display:none}
+.skel{height:300px;border-radius:13px;background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+
+/* ---- bottom nav + whatsapp ---- */
+.bottom{position:fixed;bottom:0;left:0;right:0;height:67px;background:var(--surface);border-top:1px solid var(--line);z-index:120;display:grid;grid-template-columns:repeat(5,1fr);box-shadow:0 -5px 20px var(--shadow);padding-bottom:env(safe-area-inset-bottom,0)}
+.bottom button{border:0;background:transparent;color:var(--muted);font-size:9px;font-weight:800}
+.bottom b{display:block;font-size:20px;margin-bottom:2px}
+.bottom .active{color:var(--accent-text)}
+.whats{position:fixed;right:14px;bottom:78px;width:48px;height:48px;border:0;border-radius:50%;background:#20c768;color:#fff;z-index:110;box-shadow:0 6px 18px #0003;display:grid;place-items:center;padding:0}
+.whats::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #20c768;animation:ping 2.4s infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+
+/* ---- drawers, sheet, zoom ---- */
+.drawer{position:fixed;inset:0;background:#0007;z-index:300;display:none;align-items:flex-end;backdrop-filter:blur(2px)}
+.drawer.open{display:flex}
+.panel{width:100%;max-height:86vh;background:var(--surface);border-radius:20px 20px 0 0;padding:17px;overflow:auto;animation:up .28s cubic-bezier(.2,.9,.3,1)}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.panelHead{display:flex;align-items:center;justify-content:space-between}
+.panelHead h2{margin:0}
+.close{border:0;background:var(--surface2);border-radius:50%;width:33px;height:33px;font-size:20px;line-height:1;padding:0}
+.cartItem{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.cartItem img{width:65px;height:65px;border-radius:8px;object-fit:cover}
+.cartItem h4{margin:2px 0;font-size:13px}
+.cartItem p{margin:4px 0;font-size:10px;color:var(--muted2)}
+.cartItem .qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line2);background:var(--surface2);padding:0;font-size:15px;line-height:1}
+.qty span{min-width:18px;text-align:center;font-weight:900;font-size:13px}
+.rm{border:0;background:transparent;color:var(--danger);font-size:11px;font-weight:900;margin-left:auto;align-self:flex-start;padding:4px}
+.total{display:flex;justify-content:space-between;font-size:18px;font-weight:900;margin-top:15px}
+.checkout{width:100%;margin-top:12px;padding:13px;border:0;border-radius:9px;background:var(--btn);color:var(--btn-text);font-weight:900}
+.cartEmpty{text-align:center;color:var(--muted2);padding:30px}
+.sheetWrap{align-items:flex-end;justify-content:center}
+.sheet{padding:0;max-width:640px;position:relative}
+.galWrap{position:relative}
+.gal{position:relative;background:var(--surface2);height:min(62vh,440px);display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.gal::-webkit-scrollbar{display:none}
+.gal img{flex:0 0 100%;width:100%;height:100%;object-fit:contain;scroll-snap-align:center;cursor:zoom-in;background:var(--surface2)}
+.sheet .close{position:absolute;right:12px;top:12px;z-index:5;background:#fffe;color:#111;box-shadow:0 2px 8px #0003}
+.sheetBody{padding:16px 18px 20px}
+.sheetBody h2{margin:8px 0 4px;font-size:21px}
+.sheetBody .spec{color:var(--muted);font-size:13px;margin:0 0 12px}
+.sheetBody .big{font-size:24px;font-weight:900}
+.sheetBody .big s{font-size:13px;color:var(--muted2);font-weight:400;margin-left:8px}
+.sheetBtns{display:flex;gap:10px;margin-top:16px}
+.sheetBtns button{flex:1;padding:13px;border:0;border-radius:9px;font-weight:900}
+.sheetBtns .pri{background:var(--btn);color:var(--btn-text)}
+.sheetBtns .wa{background:#20c768;color:#fff}
+.dots{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:6px;pointer-events:none}
+.dots i{width:7px;height:7px;border-radius:50%;background:#0004}.dots i.on{background:var(--accent);box-shadow:0 0 0 1px #0003}
+.zoomViewer{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:18px}
+.zoomViewer.open{display:flex}
+.zoomViewer img{max-width:100%;max-height:88vh;object-fit:contain;border-radius:12px}
+.zoomClose{position:absolute;right:15px;top:15px;border:0;background:#fff;color:#111;border-radius:50%;width:40px;height:40px;font-size:25px;line-height:1;padding:0}
+
+/* ---- footer ---- */
+footer{background:var(--footer);color:#fff;padding:30px 15px 95px;margin-top:25px}
+footer .fwrap{max-width:1100px;margin:auto;display:grid;gap:18px}
+footer img.flogo{height:38px;width:auto;filter:brightness(0) invert(1)}
+footer img.flogo.custom{filter:none;background:#fff;border-radius:8px;padding:3px}
+footer p{font-size:11px;color:#aeb4ad;line-height:1.6;margin:0;max-width:520px}
+footer .contact{display:grid;gap:6px;font-size:12px;color:#d6dbd5}
+footer a{color:inherit}
+footer .adminLink{font-size:10px;color:#6f786f;text-decoration:none}
+.toastBox{position:fixed;left:0;right:0;bottom:88px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2000;pointer-events:none}
+.toast{background:var(--btn);color:var(--btn-text);padding:11px 15px;border-radius:12px;font-size:12px;font-weight:700;box-shadow:0 8px 24px #0004;animation:rise .25s both,fade .3s 2.2s forwards;max-width:86vw}
+.toast.err{background:var(--danger);color:#fff}
+@keyframes fade{to{opacity:0;transform:translateY(8px)}}
+
+@media (min-width:700px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+  .photo{height:240px}
+  .hero{min-height:560px;align-items:center}
+  .hero h1{font-size:62px}
+  .hero p{font-size:15px;max-width:380px}
+  .heroText{padding:40px 40px;max-width:520px;margin-left:max(0px,calc((100vw - 1100px)/2))}
+  .heroPhone{right:max(30px,calc((100vw - 1100px)/2 + 30px));top:0;width:340px;height:100%}
+  .phone{width:200px;height:416px;margin:-208px 0 0 -100px;border-radius:40px;transform:rotateX(-7deg) rotateY(var(--ry,-28deg)) scale(1)}
+  .face,.rim{border-radius:40px}
+  .screen{border-radius:33px;inset:7px}
+  .slide.on{transform:scale(1)}
+  .cam{width:88px;height:88px;border-radius:24px}.cam i{width:34px;height:34px}.cam i:nth-child(2){top:46px}.cam i:nth-child(3){left:46px;top:26px}
+  .mark b{font-size:25px}.mark small{font-size:6px}
+  .cap strong{font-size:17px}.cap em{font-size:14px}
+  .bottom{display:none}
+  .whats{bottom:25px}
+  body{padding-bottom:0}
+  .panel{max-width:520px;margin:auto;border-radius:20px 20px 0 0}
+  .sheetWrap{align-items:center}.sheet{border-radius:20px;max-height:90vh}
+  .toastBox{bottom:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .track{animation:none}
+}
+
+</style>
+<style>
+/* Admin dashboard styles. Uses the same colour tokens as the store, so it follows light and dark. */
+#admin{min-height:100vh;background:var(--bg);color:var(--text);padding-bottom:40px}
+body.adm-lock{overflow:hidden}
+.adm *{box-sizing:border-box}
+.muted{color:var(--muted)}.small{font-size:12px}.grow{flex:1}
+.adm-logo{height:34px;width:auto;filter:var(--logo-filter)}.adm-logo.sm{height:26px}
+.adm-btn{border:1px solid var(--line2);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 14px;font-weight:800;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:.15s;line-height:1.2;text-decoration:none}
+.adm-btn:hover{border-color:var(--accent)}
+.adm-btn.pri{background:var(--btn);color:var(--btn-text);border-color:var(--btn)}
+.adm-btn.ghost{background:transparent;border-color:transparent}
+.adm-btn.ghost:hover{background:var(--surface2)}
+.adm-btn.icon{padding:8px 10px;min-width:36px}
+.adm-btn.sm{padding:6px 10px;font-size:11px}
+.adm-btn:disabled{opacity:.35;cursor:not-allowed}
+.adm-btn.del.arm{background:var(--danger);color:#fff;border-color:var(--danger)}
+.adm input:not([type=checkbox]):not([type=color]),.adm select,.adm textarea,.adm-login input,.adm-sheet input:not([type=checkbox]),.adm-sheet select{width:100%;border:1px solid var(--line2);background:var(--field);color:var(--text);border-radius:10px;padding:11px 12px;font-size:14px;outline:0;-webkit-appearance:none;appearance:none}
+.adm select,.adm-sheet select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 17px) 52%,calc(100% - 12px) 52%;background-size:5px 5px;background-repeat:no-repeat;padding-right:30px}
+.adm input:focus,.adm select:focus,.adm textarea:focus,.adm-login input:focus,.adm-sheet input:focus,.adm-sheet select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 28%,transparent)}
+.adm input[type=color]{width:100%;height:44px;border:1px solid var(--line2);border-radius:10px;padding:3px;background:var(--field)}
+.adm label,.adm-sheet label,.adm-login label{display:block;font-size:12px;font-weight:800;margin:14px 0 6px}
+.adm-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.adm-card h3{margin:0 0 4px;font-size:16px}
+.adm-row{display:flex;gap:10px;align-items:center}.adm-row.wrap{flex-wrap:wrap}.adm-row.between{justify-content:space-between}
+.adm-row input{flex:1;min-width:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+.checks{display:grid;gap:4px;margin-top:6px}
+.adm label.chk,.adm-sheet label.chk{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13px;margin:8px 0}
+.adm input[type=checkbox],.adm-sheet input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent-text);flex:none}
+
+/* login */
+.adm-login{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(90% 70% at 50% 0,color-mix(in srgb,var(--accent) 14%,transparent),transparent 60%),var(--bg)}
+.adm-card#loginForm{width:min(100%,380px);padding:26px;display:flex;flex-direction:column;box-shadow:0 20px 60px var(--shadow)}
+#loginForm .adm-logo{height:44px;align-self:flex-start}
+#loginForm h1{margin:18px 0 4px;font-size:24px}#loginForm p{margin:0}
+#loginForm .adm-btn{margin-top:18px;padding:13px}
+.adm-link{margin-top:14px;text-align:center;font-size:12px;color:var(--muted);text-decoration:none}
+.adm-msg{background:var(--accent-soft);color:var(--text);border-radius:10px;padding:10px 12px;font-size:12px;margin:12px 0 0!important}.adm-msg.err{background:#d9302518;color:var(--danger);font-weight:700}
+
+/* shell */
+.adm-top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.adm-pill{font-size:9px;font-weight:900;letter-spacing:2px;background:var(--btn);color:var(--btn-text);padding:4px 7px;border-radius:6px}
+.adm-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:12px 14px 4px;max-width:1000px;margin:auto}
+.adm-tabs::-webkit-scrollbar{display:none}
+.adm-tabs button{border:1px solid var(--line2);background:var(--surface);border-radius:10px;padding:9px 13px;font-size:12px;font-weight:900;white-space:nowrap;display:flex;gap:6px;align-items:center;position:relative}
+.adm-tabs button.on{background:var(--btn);color:var(--btn-text);border-color:var(--btn)}
+.adm-tabs .badge{font-style:normal;background:var(--accent);color:#111;border-radius:9px;font-size:10px;padding:1px 6px}
+.adm-main{max-width:1000px;margin:14px auto 0;padding:0 14px}
+.adm-empty{text-align:center;color:var(--muted);padding:40px 16px;border:1px dashed var(--line2);border-radius:14px;font-size:13px;line-height:1.5}
+.adm-alert{background:var(--surface);border:1px solid var(--line2);border-left:4px solid var(--accent);border-radius:10px;padding:11px 13px;margin-bottom:10px;font-size:13px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.adm-alert.warn{border-left-color:#e4a400}
+.adm-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+@media(max-width:620px){.adm-tiles{grid-template-columns:repeat(2,1fr)}}
+.adm-tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.adm-tile small{display:block;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.adm-tile strong{font-size:30px;font-variant-numeric:tabular-nums}
+.adm-tile.hot{background:var(--btn);color:var(--btn-text)}.adm-tile.hot small{color:inherit;opacity:.7}
+.adm-bars{display:flex;gap:8px;align-items:flex-end;height:130px;margin-top:14px}
+.adm-bars>div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;font-size:10px}
+.adm-bars i{width:100%;max-width:38px;background:var(--accent);border-radius:6px 6px 2px 2px;min-height:4px}
+.adm-bars b{font-variant-numeric:tabular-nums}.adm-bars small{color:var(--muted)}
+
+/* products */
+.adm-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.adm-bar input{flex:2 1 160px}.adm-bar select{flex:1 1 130px}
+.adm-list{display:grid;gap:8px}
+.adm-item{display:flex;gap:11px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:9px}
+.adm-item .thumb{position:relative;width:64px;height:76px;border-radius:9px;overflow:hidden;border:0;background:var(--surface2);padding:0;flex:none}
+.adm-item .thumb img{width:100%;height:100%;object-fit:cover}.adm-item .thumb span{font-size:9px;color:var(--muted)}
+.adm-item .thumb i{position:absolute;right:3px;bottom:3px;background:#000a;color:#fff;font-style:normal;font-size:9px;padding:1px 5px;border-radius:6px}
+.adm-item .meta{flex:1;min-width:0;cursor:pointer}
+.adm-item .meta strong{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-item .meta small{display:block;color:var(--muted);font-size:11px;margin:2px 0 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.chips span{font-size:9px;font-weight:900;background:var(--surface2);padding:3px 7px;border-radius:6px;color:var(--muted)}
+.chips span.y{background:var(--accent-soft);color:var(--accent-text)}.chips span.r{background:#d9302520;color:var(--danger)}
+.chips .price{font-size:13px;margin-right:4px}
+.acts{display:flex;align-items:center;gap:2px;flex:none}
+@media(max-width:560px){.adm-item{flex-wrap:wrap}.acts{width:100%;justify-content:flex-end;border-top:1px solid var(--line);padding-top:6px}}
+.sw{position:relative;display:inline-block!important;width:42px;height:24px;margin:0 6px 0 0!important}
+.sw input{opacity:0;position:absolute;inset:0;width:100%!important;height:100%!important;margin:0;cursor:pointer;z-index:2}
+.sw i{position:absolute;inset:0;background:var(--line2);border-radius:14px;transition:.2s}
+.sw i::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px #0004}
+.sw input:checked+i{background:var(--ok)}.sw input:checked+i::after{transform:translateX(18px)}
+
+/* editor */
+.adm-modal{position:fixed;inset:0;z-index:2500;background:#000a;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px)}
+.adm-sheet{width:100%;max-width:640px;max-height:94vh;background:var(--surface);color:var(--text);border-radius:20px 20px 0 0;display:flex;flex-direction:column;animation:up .28s cubic-bezier(.2,.9,.3,1)}
+@media(min-width:700px){.adm-modal{align-items:center}.adm-sheet{border-radius:20px;max-height:90vh}}
+.adm-sheet-h{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}.adm-sheet-h h2{margin:0;font-size:18px}
+.adm-sheet-b{padding:4px 16px 16px;overflow:auto;flex:1}
+.adm-sheet-f{display:flex;gap:10px;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--line)}
+.adm-sheet-f .pri{flex:1;max-width:240px}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.photos.loading{opacity:.6}
+.ph{position:relative;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:var(--surface2);border:2px solid transparent;margin:0!important}
+.ph.main{border-color:var(--accent)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph>span{position:absolute;left:4px;top:4px;background:var(--accent);color:#111;font-size:9px;font-weight:900;border-radius:5px;padding:1px 5px}.ph>span:empty{display:none}
+.ph>div{position:absolute;right:3px;bottom:3px;display:flex;gap:3px}
+.ph button{width:26px;height:26px;border-radius:50%;border:0;background:#000b;color:#fff;font-size:12px;padding:0}
+.ph.add{display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--line2);cursor:pointer;color:var(--muted);gap:2px}
+.ph.add b{font-size:26px;line-height:1}.ph.add small{font-size:10px}
+
+/* categories, orders, misc */
+.adm-cat{display:flex;gap:6px;align-items:center;margin:8px 0}.adm-cat input{flex:1;min-width:0}.adm-cat small{white-space:nowrap}
+.adm-orders{display:grid;gap:10px}
+.order select{width:auto!important;padding:6px 28px 6px 10px!important;font-size:12px!important}
+.order.new{border-left:4px solid var(--accent)}.order.done{opacity:.65}
+.order ul{list-style:none;margin:10px 0;padding:0;display:grid;gap:6px;font-size:13px}.order li{display:flex;justify-content:space-between;gap:10px}.order li small{color:var(--muted)}
+.imgfield{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.imgfield .prev{width:90px;height:60px;border-radius:9px;background:var(--surface2);border:1px solid var(--line2);overflow:hidden;display:grid;place-items:center;font-size:10px;color:var(--muted)}
+.imgfield .prev img{width:100%;height:100%;object-fit:contain}
+.adm-savebar{position:sticky;top:60px;z-index:40;display:none;align-items:center;justify-content:space-between;gap:10px;background:var(--btn);color:var(--btn-text);padding:9px 12px;border-radius:12px;margin-bottom:12px;font-size:12px;font-weight:800}
+.adm-savebar.show{display:flex}.adm-savebar .pri{background:var(--accent);color:#111;border-color:var(--accent)}
+
+</style>
+</head>
+<body>
+
+<!-- Logo intro animation -->
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="splash-glow"></div>
+  <div class="sl" id="sl">
+    <img class="sl-l sl-eli" src="/images/logo/logo-eli.png" alt="">
+    <img class="sl-l sl-n" src="/images/logo/logo-n.png" alt="">
+    <img class="sl-l sl-phone" src="/images/logo/logo-phone.png" alt="">
+    <img class="sl-l sl-arc" src="/images/logo/logo-arc.png" alt="">
+    <img class="sl-l sl-tag" src="/images/logo/logo-tag.png" alt="">
+  </div>
+  <div class="sl-bar"><i></i></div>
+</div>
+
+<!-- Storefront -->
+<div id="shop">
+  <div class="top"></div>
+  <header class="nav"><div class="navrow">
+    <button class="menu" id="menuBtn" aria-label="Menu">☰</button>
+    <a class="logoLink" href="./" aria-label="Elion Phones home"><img class="logo" id="navLogo" src="/images/logo/logo.png" alt="Elion Phones"></a>
+    <div class="search"><input id="search" type="search" placeholder="Search for products..." autocomplete="off"><button id="searchBtn" aria-label="Search">⌕</button></div>
+    <button class="icon themeBtn" id="themeBtn" aria-label="Switch light or dark theme"><span class="ico-sun">☀</span><span class="ico-moon">☾</span></button>
+    <button class="icon cartIcon" id="cartBtn" aria-label="Open cart">🛒<span class="count" id="count">0</span></button>
+  </div>
+  <div class="menuPanel" id="menuPanel">
+    <div data-go="products">📱 Smartphones</div><div data-go="categories">▦ Categories</div><div data-act="cart">🛒 My Cart</div><div data-act="wa">💬 WhatsApp</div><div data-act="theme">◐ Light / Dark</div>
+  </div></header>
+
+  <section class="hero" id="hero">
+    <div class="heroText">
+      <div class="kicker" id="heroKicker"></div>
+      <h1 id="heroTitle"></h1>
+      <p id="heroP"></p>
+      <button class="heroBtn" id="heroBtn"></button>
+    </div>
+    <div class="heroPhone" id="heroPhone" aria-hidden="true">
+      <div class="stage" id="stage">
+        <div class="phone" id="phone">
+          <div class="face front">
+            <div class="screen">
+              <div class="slides"><div class="slide a"></div><div class="slide b"></div></div>
+              <div class="shade"></div>
+              <div class="status"><b id="clock">9:41</b><span class="island"></span><span class="batt"></span></div>
+              <div class="cap"><small>ELION PHONES</small><strong id="capName">Welcome</strong><em id="capPrice"></em></div>
+              <i class="home"></i>
+            </div>
+          </div>
+          <div class="face back">
+            <div class="cam"><i></i><i></i><i></i><u></u></div>
+            <div class="mark"><b>ELION</b><small>PHONES &amp; ACCESSORIES</small></div>
+          </div>
+        </div>
+        <div class="floor"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker"><div class="track" id="track"></div></div>
+
+  <main class="container">
+    <section class="section" id="categories"><div class="head"><h2>Shop by Category</h2><span class="see" id="seeAll">See all</span></div><div class="categories" id="cats"></div></section>
+    <div class="offer"><div><strong id="offerTitle"></strong><small id="offerText"></small></div><button id="offerBtn"></button></div>
+    <section class="section" id="products">
+      <div class="head"><h2 id="listTitle">Featured Phones</h2><span class="see" id="result"></span></div>
+      <div class="sortRow"><label for="sort">Sort</label><select id="sort"><option value="default">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="name">Name A–Z</option></select><button class="chip" id="favOnly" aria-pressed="false">♥ Saved</button></div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty">No products found.</div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <button class="whats" id="waBtn" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.700 6.700 0 0 1-3.300-2.900c-.2-.4.2-.4.700-1.300.1-.2 0-.3 0-.5l-.8-1.900c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.200 5.200 5.200 0 0 0 1.100 2.800 11.900 11.900 0 0 0 4.600 4.100c1.700.7 2.400.8 3.200.7a2.700 2.700 0 0 0 1.800-1.300 2.200 2.200 0 0 0 .2-1.300c-.1-.1-.3-.2-.5-.3z"/></svg></button>
+  <nav class="bottom">
+    <button class="active" data-go="products"><b>⌂</b>Home</button>
+    <button data-go="categories"><b>▦</b>Categories</button>
+    <button id="bSearch"><b>⌕</b>Search</button>
+    <button data-act="cart"><b>🛒</b>Cart</button>
+    <button data-act="wa"><b>◉</b>Chat</button>
+  </nav>
+
+  <!-- Cart -->
+  <div class="drawer" id="drawer"><div class="panel">
+    <div class="panelHead"><h2>Your Cart</h2><button class="close" id="cartClose" aria-label="Close cart">×</button></div>
+    <div id="cartList"></div>
+    <div class="total"><span>Total</span><span id="total">₦0</span></div>
+    <button class="checkout" id="checkout">Order on WhatsApp</button>
+  </div></div>
+
+  <!-- Product sheet -->
+  <div class="drawer sheetWrap" id="sheet"><div class="panel sheet" id="sheetPanel"></div></div>
+
+  <!-- Image zoom -->
+  <div class="zoomViewer" id="zoomViewer"><button class="zoomClose" id="zoomClose" aria-label="Close">×</button><img id="zoomImage" alt="Product preview"></div>
+</div>
+
+<!-- Admin -->
+<div id="admin" hidden></div>
+
+<div class="toastBox" id="toastBox" aria-live="polite"></div>
+
+<script>window.__ELION_LOGO="/images/logo/logo.png";</script>
+
+<script>
+/* Shared code: data layer (real server or in-browser demo), helpers, theme, toast. */
+(function () {
+  'use strict';
+  const E = window.Elion = {};
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  E.$ = $; E.$$ = $$;
+  E.esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  E.money = (n, cur) => (cur || (E.settings && E.settings.currency) || '₦') + Number(n || 0).toLocaleString('en-NG');
+  E.store = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } };
+  E.slug = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'item';
+
+  /* ---------- toast ---------- */
+  E.toast = (t, err) => {
+    const box = $('#toastBox'); if (!box) return;
+    const d = document.createElement('div'); d.className = 'toast' + (err ? ' err' : ''); d.textContent = t;
+    box.appendChild(d); setTimeout(() => d.remove(), 2700);
+  };
+
+  /* ---------- theme ---------- */
+  E.theme = () => {
+    const t = document.documentElement.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+  E.setTheme = t => {
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('elion_theme', t); } catch (e) {}
+    const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = t === 'dark' ? '#090b09' : '#111511';
+  };
+  E.toggleTheme = () => E.setTheme(E.theme() === 'dark' ? 'light' : 'dark');
+  E.applyDefaultTheme = s => {
+    let saved = null; try { saved = localStorage.getItem('elion_theme'); } catch (e) {}
+    if (!saved && s && (s.theme === 'light' || s.theme === 'dark')) document.documentElement.setAttribute('data-theme', s.theme);
+  };
+
+  /* ---------- image compression before upload ---------- */
+  E.compress = async (file, max, keepPng) => {
+    max = max || 1400;
+    if (!/^image\//.test(file.type)) throw new Error('Please choose an image file');
+    if (file.type === 'image/gif') return file;
+    let bmp;
+    try { bmp = await createImageBitmap(file); }
+    catch (e) { return file; }
+    const r = Math.min(1, max / Math.max(bmp.width, bmp.height));
+    const w = Math.round(bmp.width * r), h = Math.round(bmp.height * r);
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d');
+    const png = keepPng && file.type === 'image/png';
+    if (!png) { g.fillStyle = '#fff'; g.fillRect(0, 0, w, h); }
+    g.drawImage(bmp, 0, 0, w, h);
+    return await new Promise(res => c.toBlob(b => res(b || file), png ? 'image/png' : 'image/jpeg', 0.86));
+  };
+
+  /* ---------- data layer ---------- */
+  const API = E.api = { mode: 'server' };
+  let token = null; try { token = localStorage.getItem('elion_token'); } catch (e) {}
+  API.hasToken = () => !!token;
+  API.setToken = t => { token = t; try { t ? localStorage.setItem('elion_token', t) : localStorage.removeItem('elion_token'); } catch (e) {} };
+
+  async function http(method, url, body, raw) {
+    const h = {};
+    if (token) h.Authorization = 'Bearer ' + token;
+    let payload;
+    if (raw) { payload = raw; h['Content-Type'] = raw.type || 'application/octet-stream'; }
+    else if (body !== undefined) { payload = JSON.stringify(body); h['Content-Type'] = 'application/json'; }
+    const r = await fetch(url, { method, headers: h, body: payload, cache: 'no-store' });
+    let data = null; try { data = await r.json(); } catch (e) {}
+    if (!r.ok) {
+      if (r.status === 401 && token && url !== 'api/login') { API.setToken(null); E.onLoggedOut && E.onLoggedOut(); }
+      throw Object.assign(new Error((data && data.error) || 'Something went wrong'), { status: r.status });
+    }
+    return data;
+  }
+
+  /* --- demo backend: same endpoints, stored in this browser (IndexedDB). Used when there is no server. --- */
+  const Demo = (() => {
+    let state = null, authState = null;
+    const idb = () => new Promise((res, rej) => {
+      const q = indexedDB.open('elion-demo', 1);
+      q.onupgradeneeded = () => q.result.createObjectStore('kv');
+      q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error);
+    });
+    const kv = async (k, v) => {
+      try {
+        const db = await idb();
+        return await new Promise((res, rej) => {
+          const t = db.transaction('kv', v === undefined ? 'readonly' : 'readwrite'); const s = t.objectStore('kv');
+          const q = v === undefined ? s.get(k) : s.put(v, k);
+          q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error);
+        });
+      } catch (e) { return null; }
+    };
+    const sha = async s => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode('elion|' + s)))).map(b => b.toString(16).padStart(2, '0')).join('');
+    const save = () => kv('db', state);
+    async function init() {
+      if (state) return;
+      state = await kv('db');
+      if (!state) {
+        const r = await fetch('data/seed.json'); state = await r.json(); state.visits = {};
+        await save();
+      }
+      authState = (await kv('auth')) || { hash: await sha('elion2026'), isDefault: true };
+    }
+    const num = v => { v = Number(v); return Number.isFinite(v) && v >= 0 ? Math.round(v) : 0; };
+    const clean = (b, p) => {
+      p = p || {};
+      return {
+        id: p.id, name: String(b.name || '').slice(0, 120).trim() || 'Untitled product', spec: String(b.spec || '').slice(0, 200),
+        price: num(b.price), oldPrice: num(b.oldPrice), category: String(b.category || 'other').slice(0, 40), tag: String(b.tag || '').slice(0, 24),
+        inStock: b.inStock !== false, featured: !!b.featured, deal: !!b.deal, rating: Math.min(5, Math.max(0, Number(b.rating) || 0)),
+        images: (Array.isArray(b.images) ? b.images : p.images || []).filter(Boolean).slice(0, 8),
+        order: Number.isFinite(Number(b.order)) ? Number(b.order) : (p.order != null ? p.order : state.products.length)
+      };
+    };
+    const today = () => new Date().toISOString().slice(0, 10);
+    const renum = () => { state.products.sort((a, b) => a.order - b.order).forEach((x, i) => x.order = i); };
+    const bad = (m, s) => { throw Object.assign(new Error(m), { status: s || 400 }); };
+    const needAdmin = () => { if (token !== 'demo-admin') bad('Please log in', 401); };
+
+    return async function (method, url, body, raw) {
+      await init();
+      const p = url.split('?')[0].replace(/^\/?/, '/');
+      let m;
+      if (method === 'GET' && p === '/api/store') return { products: state.products.slice().sort((a, b) => a.order - b.order), settings: state.settings };
+      if (method === 'POST' && p === '/api/visit') { const d = today(); state.visits[d] = (state.visits[d] || 0) + 1; await save(); return { ok: true }; }
+      if (method === 'POST' && p === '/api/orders') {
+        const items = (body.items || []).map(i => ({ name: i.name, spec: i.spec, price: num(i.price), qty: Math.max(1, num(i.qty) || 1) }));
+        const o = { id: 'o' + Date.now().toString(36), at: new Date().toISOString(), items, total: items.reduce((s, i) => s + i.price * i.qty, 0), status: 'new', note: '' };
+        state.orders.unshift(o); await save(); return { ok: true, id: o.id };
+      }
+      if (method === 'POST' && p === '/api/login') {
+        if ((await sha(body.password || '')) !== authState.hash) bad('Wrong password', 401);
+        return { token: 'demo-admin', isDefaultPassword: !!authState.isDefault };
+      }
+      needAdmin();
+      if (p === '/api/me') return { ok: true, isDefaultPassword: !!authState.isDefault };
+      if (p === '/api/stats') {
+        const days = []; for (let i = 6; i >= 0; i--) { const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10); days.push({ day: d, visits: state.visits[d] || 0 }); }
+        return { products: state.products.length, inStock: state.products.filter(x => x.inStock).length, orders: state.orders.length, newOrders: state.orders.filter(o => o.status === 'new').length, stockValue: state.products.filter(x => x.inStock).reduce((s, x) => s + x.price, 0), days };
+      }
+      if (method === 'GET' && p === '/api/orders') return { orders: state.orders };
+      if ((m = p.match(/^\/api\/orders\/([\w-]+)$/))) {
+        const o = state.orders.find(x => x.id === m[1]); if (!o) bad('Not found', 404);
+        if (method === 'PATCH') { if (['new', 'contacted', 'done'].includes(body.status)) o.status = body.status; if ('note' in body) o.note = String(body.note || '').slice(0, 300); await save(); return o; }
+        if (method === 'DELETE') { state.orders = state.orders.filter(x => x !== o); await save(); return { ok: true }; }
+      }
+      if (method === 'POST' && p === '/api/products') {
+        const prod = clean(body); prod.order = -1; let id = E.slug(prod.name), n = 1;
+        while (state.products.some(x => x.id === id)) id = E.slug(prod.name) + '-' + (++n);
+        prod.id = id; state.products.unshift(prod); renum(); await save(); return prod;
+      }
+      if (method === 'POST' && p === '/api/products/reorder') {
+        (body.ids || []).forEach((id, i) => { const x = state.products.find(q => q.id === id); if (x) x.order = i; });
+        renum(); await save(); return { ok: true };
+      }
+      if ((m = p.match(/^\/api\/products\/([\w-]+)$/))) {
+        const i = state.products.findIndex(x => x.id === m[1]); if (i < 0) bad('Not found', 404);
+        if (method === 'PUT') { state.products[i] = clean(body, state.products[i]); await save(); return state.products[i]; }
+        if (method === 'DELETE') { state.products.splice(i, 1); renum(); await save(); return { ok: true }; }
+      }
+      if (method === 'PUT' && p === '/api/settings') {
+        const out = Object.assign({}, body);
+        if ('whatsapp' in out) out.whatsapp = String(out.whatsapp || '').replace(/\D/g, '');
+        Object.assign(state.settings, out); await save(); return state.settings;
+      }
+      if (method === 'POST' && p === '/api/upload') {
+        const url2 = await new Promise((res, rej) => { const f = new FileReader(); f.onload = () => res(f.result); f.onerror = rej; f.readAsDataURL(raw); });
+        return { url: url2 };
+      }
+      if (method === 'POST' && p === '/api/password') {
+        if ((await sha(body.current || '')) !== authState.hash) bad('Current password is wrong');
+        if (String(body.next || '').length < 6) bad('New password must be at least 6 characters');
+        authState = { hash: await sha(body.next), isDefault: false }; await kv('auth', authState); return { ok: true };
+      }
+      if (method === 'GET' && p === '/api/backup') return { products: state.products, settings: state.settings, orders: state.orders };
+      if (method === 'POST' && p === '/api/restore') {
+        if (!Array.isArray(body.products)) bad('This is not an Elion backup file');
+        state.products = body.products.map((x, i) => { const c = clean(x, { id: E.slug(x.id || x.name), order: i }); c.id = E.slug(x.id || x.name); c.order = i; return c; });
+        if (body.settings) Object.assign(state.settings, body.settings);
+        if (Array.isArray(body.orders)) state.orders = body.orders;
+        await save(); return { ok: true, products: state.products.length };
+      }
+      if (method === 'POST' && p === '/api/reset-demo') {
+        const r = await fetch('data/seed.json'); state = await r.json(); state.visits = {}; await save(); return { ok: true };
+      }
+      bad('Not found', 404);
+    };
+  })();
+
+  API.req = (method, url, body, raw) => API.mode === 'demo' ? Demo(method, url, body, raw) : http(method, url, body, raw);
+  API.get = u => API.req('GET', u);
+  API.post = (u, b) => API.req('POST', u, b || {});
+  API.put = (u, b) => API.req('PUT', u, b || {});
+  API.patch = (u, b) => API.req('PATCH', u, b || {});
+  API.del = u => API.req('DELETE', u);
+  API.upload = async (file, opts) => {
+    const blob = await E.compress(file, (opts && opts.max) || 1400, opts && opts.png);
+    const r = await API.req('POST', 'api/upload', undefined, blob);
+    return r.url;
+  };
+  API.detect = async () => {
+    try {
+      const r = await fetch('api/store', { cache: 'no-store' });
+      const ct = r.headers.get('content-type') || '';
+      if (r.ok && ct.indexOf('json') > -1) { API.mode = 'server'; return 'server'; }
+    } catch (e) {}
+    API.mode = 'demo'; return 'demo';
+  };
+  E.isDemo = () => API.mode === 'demo';
+})();
+
+</script>
+<script>
+/* Rotating 3D phone in the hero. Pure CSS 3D, driven by one requestAnimationFrame loop. */
+(function () {
+  'use strict';
+  const E = window.Elion;
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let started = false;
+
+  E.startPhone = function (products, onOpen) {
+    const phone = document.getElementById('phone'), stage = document.getElementById('stage');
+    if (!phone || !stage) return;
+    if (!started) {
+      started = true;
+      // build the edge of the phone from thin slices so it has real thickness
+      const first = phone.firstChild;
+      for (let z = -6; z <= 6; z++) {
+        const s = document.createElement('div'); s.className = 'rim';
+        s.style.transform = 'translateZ(' + z + 'px)';
+        s.style.background = Math.abs(z) % 2 ? '#2a2f37' : '#161a1f';
+        phone.insertBefore(s, first);
+      }
+      let angle = -28, vel = 0, drag = false, lastX = 0, visible = true, last = performance.now();
+      if (window.IntersectionObserver) new IntersectionObserver(en => { visible = en[0].isIntersecting; }, { threshold: 0.01 }).observe(stage);
+      stage.addEventListener('pointerdown', e => { drag = true; lastX = e.clientX; vel = 0; try { stage.setPointerCapture(e.pointerId); } catch (x) {} stage.style.cursor = 'grabbing'; });
+      stage.addEventListener('pointermove', e => { if (!drag) return; const dx = e.clientX - lastX; lastX = e.clientX; angle += dx * 0.7; vel = dx * 0.7; });
+      const up = () => { drag = false; stage.style.cursor = ''; };
+      stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+      stage.addEventListener('click', () => { if (E._phoneCurrent && onOpen) onOpen(E._phoneCurrent); });
+      const frame = now => {
+        const dt = Math.min(50, now - last) / 1000; last = now;
+        if (visible && !reduce) {
+          if (!drag) { angle += 26 * dt + vel; vel *= 0.94; if (Math.abs(vel) < 0.02) vel = 0; }
+          const bob = Math.sin(now / 900) * 5;
+          phone.style.setProperty('--ry', angle.toFixed(2) + 'deg');
+          phone.style.translate = '0 ' + bob.toFixed(1) + 'px';
+        }
+        requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+      const clock = document.getElementById('clock');
+      const tick = () => { const d = new Date(); clock.textContent = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); };
+      tick(); setInterval(tick, 20000);
+    }
+    // slideshow on the phone screen: shows real products from the store
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const list = products.filter(p => p.images && p.images[0]).slice(0, 8);
+    clearInterval(E._phoneTimer);
+    if (!list.length) return;
+    let i = 0, which = 0;
+    const show = () => {
+      const p = list[i % list.length]; E._phoneCurrent = p.id;
+      const el = slides[which % 2], other = slides[(which + 1) % 2];
+      el.style.backgroundImage = 'url("' + E.assetUrl(p.images[0]) + '")';
+      el.classList.add('on'); other.classList.remove('on');
+      document.getElementById('capName').textContent = p.name;
+      document.getElementById('capPrice').textContent = p.price ? E.money(p.price) : 'Call for price';
+      i++; which++;
+    };
+    show(); E._phoneTimer = setInterval(show, 3200);
+  };
+  E.assetUrl = u => u;
+})();
+
+</script>
+<script>
+/* Storefront: renders products, categories, cart, product sheet. */
+(function () {
+  'use strict';
+  const E = window.Elion, $ = E.$, $$ = E.$$, esc = E.esc;
+  const S = E.shop = { products: [], settings: {}, cat: 'all', q: '', sort: 'default', favOnly: false };
+  let cart = E.store('elion_cart') || [];       // [{id, qty}]
+  let favs = new Set(E.store('elion_favs') || []);
+  const saveCart = () => E.store('elion_cart', cart);
+  const byId = id => S.products.find(p => p.id === id);
+  const catLabel = id => (S.settings.categories || []).find(c => c.id === id);
+
+  function waNumber() { return String(S.settings.whatsapp || '').replace(/\D/g, ''); }
+  function waOpen(text) {
+    const n = waNumber();
+    window.open('https://wa.me/' + n + '?text=' + encodeURIComponent(text), '_blank');
+  }
+  S.chat = () => {
+    const name = S.settings.storeName || 'Elion Phones';
+    const lines = cart.map(c => byId(c.id)).filter(Boolean);
+    let msg = 'Hello ' + name + ' 👋';
+    if (cart.length) {
+      msg += '\n\nI want to order:\n'; let total = 0;
+      cart.forEach(c => { const p = byId(c.id); if (!p) return; total += p.price * c.qty; msg += '• ' + p.name + ' — ' + p.spec + ' — ' + (p.price ? E.money(p.price) : 'price on request') + (c.qty > 1 ? ' × ' + c.qty : '') + '\n'; });
+      msg += '\nTotal: ' + E.money(total);
+    }
+    waOpen(msg);
+  };
+
+  /* ---------- settings -> page ---------- */
+  S.applySettings = () => {
+    const s = S.settings;
+    document.title = s.storeName || 'Elion Phones';
+    document.documentElement.style.setProperty('--accent', s.accent || '#8be44d');
+    $('#shop').classList.toggle('no3d', s.show3d === false);
+    const custom = !!s.logoUrl;
+    ['#navLogo'].forEach(sel => { const im = $(sel); im.src = custom ? s.logoUrl : window.__ELION_LOGO; im.classList.toggle('custom', custom); });
+    $('#heroKicker').textContent = s.heroKicker || '';
+    $('#heroTitle').innerHTML = esc(s.heroLine1) + '<br><span>' + esc(s.heroAccent) + '</span> ' + esc(s.heroLine2);
+    $('#heroP').textContent = s.heroText || '';
+    $('#heroBtn').innerHTML = esc(s.heroButton || 'SHOP NOW') + ' <b>→</b>';
+    $('#hero').style.backgroundImage = s.heroImage ? 'url("' + s.heroImage + '")' : '';
+    const items = (s.ticker && s.ticker.length ? s.ticker : ['NEW ARRIVALS']);
+    const row = items.concat(items).concat(items.length < 4 ? items.concat(items) : []);
+    $('#track').innerHTML = row.map(t => '<span>' + esc(t) + '</span>').join('');
+    $('#offerTitle').textContent = s.offerTitle || ''; $('#offerText').textContent = s.offerText || ''; $('#offerBtn').textContent = s.offerButton || 'SEE DEALS';
+    $('.offer').hidden = !(s.offerTitle || s.offerText);
+    renderCats(); renderFooter();
+  };
+  function renderFooter() {
+    const s = S.settings, custom = !!s.logoUrl;
+    const bits = [];
+    if (s.phone) bits.push('<span>📞 ' + esc(s.phone) + '</span>');
+    if (waNumber()) bits.push('<span>💬 WhatsApp +' + esc(waNumber()) + '</span>');
+    if (s.address) bits.push('<span>📍 ' + esc(s.address) + '</span>');
+    if (s.hours) bits.push('<span>🕘 ' + esc(s.hours) + '</span>');
+    if (s.instagram) bits.push('<span>📷 ' + esc(s.instagram) + '</span>');
+    $('#footer').innerHTML = '<div class="fwrap"><img class="flogo' + (custom ? ' custom' : '') + '" src="' + esc(custom ? s.logoUrl : window.__ELION_LOGO) + '" alt="' + esc(s.storeName) + '">' +
+      '<p>' + esc(s.footerText || '') + '</p>' + (bits.length ? '<div class="contact">' + bits.join('') + '</div>' : '') +
+      '<a class="adminLink" href="#admin" id="adminLink">Admin</a></div>';
+    $('#adminLink').addEventListener('click', e => { e.preventDefault(); E.openAdmin(); });
+  }
+
+  /* ---------- categories ---------- */
+  function renderCats() {
+    const cats = [{ id: 'all', label: 'All' }].concat(S.settings.categories || []).concat([{ id: 'deal', label: 'Best Deals' }]);
+    if (!cats.some(c => c.id === S.cat)) S.cat = 'all';
+    $('#cats').innerHTML = cats.map(c => '<button class="cat' + (c.id === S.cat ? ' active' : '') + '" data-cat="' + esc(c.id) + '">' + esc(c.label) + '</button>').join('');
+  }
+
+  /* ---------- product grid ---------- */
+  function visible() {
+    const q = S.q.toLowerCase().trim();
+    let list = S.products.filter(p => {
+      if (S.cat === 'deal' && !p.deal) return false;
+      if (S.cat !== 'all' && S.cat !== 'deal' && p.category !== S.cat) return false;
+      if (S.favOnly && !favs.has(p.id)) return false;
+      if (q) { const c = catLabel(p.category); const t = (p.name + ' ' + p.spec + ' ' + p.tag + ' ' + (c ? c.label : '')).toLowerCase(); if (!q.split(/\s+/).every(w => t.includes(w))) return false; }
+      return true;
+    });
+    if (S.sort === 'low') list.sort((a, b) => (a.price || 1e12) - (b.price || 1e12));
+    else if (S.sort === 'high') list.sort((a, b) => b.price - a.price);
+    else if (S.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
+    return list;
+  }
+  function card(p, i) {
+    const img = p.images && p.images[0] ? '<img loading="lazy" decoding="async" src="' + esc(p.images[0]) + '" alt="' + esc(p.name) + '">' : '';
+    const rating = S.settings.showRatings !== false && p.rating ? '<div class="stars">★★★★★ <small>' + Number(p.rating).toFixed(1) + '</small></div>' : '<div class="stars">&nbsp;</div>';
+    const priceHtml = p.price ? '<div><strong>' + E.money(p.price) + '</strong>' + (p.oldPrice > p.price ? '<s>' + E.money(p.oldPrice) + '</s>' : '') + '</div>' : '<strong class="ask">Call for price</strong>';
+    let btn;
+    if (!p.inStock) btn = '<button class="cartBtn" disabled aria-label="Sold out">🛒</button>';
+    else if (!p.price) btn = '<button class="cartBtn" data-ask="' + esc(p.id) + '" aria-label="Ask for price">💬</button>';
+    else btn = '<button class="cartBtn" data-add="' + esc(p.id) + '" aria-label="Add to cart">🛒</button>';
+    return '<article class="product" style="animation-delay:' + Math.min(i, 12) * 35 + 'ms" data-id="' + esc(p.id) + '">' +
+      '<div class="photo" data-open="' + esc(p.id) + '"><span class="stock' + (p.inStock ? '' : ' out') + '">' + (p.inStock ? 'In stock' : 'Sold out') + '</span>' +
+      '<button class="fav' + (favs.has(p.id) ? ' on' : '') + '" data-fav="' + esc(p.id) + '" aria-label="Save">' + (favs.has(p.id) ? '♥' : '♡') + '</button>' + img + '</div>' +
+      '<div class="info">' + (p.tag ? '<span class="tag">' + esc(p.tag) + '</span>' : '<span></span>') + '<h3>' + esc(p.name) + '</h3><p>' + esc(p.spec) + '</p>' + rating +
+      '<div class="priceRow">' + priceHtml + btn + '</div></div></article>';
+  }
+  S.render = () => {
+    const list = visible();
+    $('#grid').innerHTML = list.map(card).join('');
+    $('#result').textContent = list.length + ' product' + (list.length === 1 ? '' : 's');
+    $('#empty').style.display = list.length ? 'none' : 'block';
+    const c = [{ id: 'all', label: 'Featured Phones' }, { id: 'deal', label: 'Best Deals' }].concat(S.settings.categories || []).find(x => x.id === S.cat);
+    $('#listTitle').textContent = S.cat === 'all' ? 'Featured Phones' : (c ? c.label : 'Products');
+  };
+
+  /* ---------- cart ---------- */
+  function updateCart() {
+    const n = cart.reduce((s, c) => s + c.qty, 0);
+    $('#count').textContent = n;
+    let total = 0;
+    const rows = cart.map(c => { const p = byId(c.id); if (!p) return ''; total += p.price * c.qty;
+      return '<div class="cartItem"><img src="' + esc(p.images[0] || '') + '" alt=""><div style="flex:1;min-width:0"><h4>' + esc(p.name) + '</h4><p>' + esc(p.spec) + '</p><strong>' + (p.price ? E.money(p.price) : 'Price on request') + '</strong>' +
+        '<div class="qty"><button data-dec="' + esc(p.id) + '" aria-label="Less">−</button><span>' + c.qty + '</span><button data-inc="' + esc(p.id) + '" aria-label="More">+</button></div></div><button class="rm" data-rm="' + esc(p.id) + '">Remove</button></div>'; }).join('');
+    $('#cartList').innerHTML = rows || '<p class="cartEmpty">Your cart is empty.</p>';
+    $('#total').textContent = E.money(total);
+    $('#checkout').disabled = !n;
+  }
+  const add = (id, q) => {
+    const p = byId(id); if (!p) return;
+    const c = cart.find(x => x.id === id); if (c) c.qty = Math.min(20, c.qty + (q || 1)); else cart.push({ id, qty: q || 1 });
+    saveCart(); updateCart(); E.toast(p.name + ' added to cart');
+    const b = $('#count'); b.classList.add('bump'); setTimeout(() => b.classList.remove('bump'), 220);
+  };
+  const setQty = (id, d) => { const c = cart.find(x => x.id === id); if (!c) return; c.qty += d; if (c.qty < 1) cart = cart.filter(x => x !== c); saveCart(); updateCart(); };
+  S.openCart = () => { updateCart(); $('#drawer').classList.add('open'); };
+  const closeCart = () => $('#drawer').classList.remove('open');
+  function ask(id) { const p = byId(id); if (!p) return; waOpen('Hello ' + (S.settings.storeName || 'Elion Phones') + ' 👋\n\nWhat is the price of the ' + p.name + ' (' + p.spec + ')? Is it available?'); }
+
+  async function checkout() {
+    const items = cart.map(c => { const p = byId(c.id); return p && { name: p.name, spec: p.spec, price: p.price, qty: c.qty }; }).filter(Boolean);
+    if (!items.length) return;
+    S.chat();                                           // open WhatsApp right away (popup-safe)
+    try { await E.api.post('api/orders', { items }); } catch (e) { /* the order still reaches WhatsApp */ }
+  }
+
+  /* ---------- product sheet ---------- */
+  function openSheet(id) {
+    const p = byId(id); if (!p) return;
+    const imgs = p.images && p.images.length ? p.images : [''];
+    const c = catLabel(p.category);
+    $('#sheetPanel').innerHTML =
+      '<div class="galWrap"><div class="gal" id="gal">' + imgs.map(u => '<img src="' + esc(u) + '" alt="' + esc(p.name) + '" data-zoom="' + esc(u) + '">').join('') + '</div>' +
+      (imgs.length > 1 ? '<div class="dots" id="dots">' + imgs.map((_, i) => '<i' + (i ? '' : ' class="on"') + '></i>').join('') + '</div>' : '') + '</div>' +
+      '<button class="close" id="sheetClose" aria-label="Close">×</button>' +
+      '<div class="sheetBody">' + (p.tag ? '<span class="tag">' + esc(p.tag) + '</span> ' : '') + (c ? '<span class="tag">' + esc(c.label) + '</span>' : '') +
+      '<h2>' + esc(p.name) + '</h2><p class="spec">' + esc(p.spec) + '</p>' +
+      '<div class="big">' + (p.price ? E.money(p.price) : 'Call for price') + (p.oldPrice > p.price ? '<s>' + E.money(p.oldPrice) + '</s>' : '') + '</div>' +
+      '<div class="sheetBtns">' + (p.inStock && p.price ? '<button class="pri" data-add="' + esc(p.id) + '" data-close="1">Add to cart</button>' : '') +
+      '<button class="wa" data-ask="' + esc(p.id) + '">' + (p.inStock ? 'Ask on WhatsApp' : 'Ask when back in stock') + '</button></div></div>';
+    $('#sheet').classList.add('open');
+    const gal = $('#gal');
+    if (imgs.length > 1) gal.addEventListener('scroll', () => { const i = Math.round(gal.scrollLeft / gal.clientWidth); $$('#dots i').forEach((d, k) => d.classList.toggle('on', k === i)); });
+  }
+  const closeSheet = () => $('#sheet').classList.remove('open');
+  const zoom = u => { $('#zoomImage').src = u; $('#zoomViewer').classList.add('open'); };
+
+  /* ---------- events ---------- */
+  const go = id => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth' }); $('#menuPanel').classList.remove('open'); };
+  S.bind = () => {
+    document.addEventListener('click', e => {
+      const t = e.target.closest('[data-add],[data-ask],[data-fav],[data-open],[data-cat],[data-inc],[data-dec],[data-rm],[data-go],[data-act],[data-zoom]');
+      if (!t || $('#shop').offsetParent === null) return;
+      const d = t.dataset;
+      if (d.add) { add(d.add); if (d.close) closeSheet(); }
+      else if (d.ask) ask(d.ask);
+      else if (d.fav) { favs.has(d.fav) ? favs.delete(d.fav) : favs.add(d.fav); E.store('elion_favs', Array.from(favs)); if (S.favOnly) S.render(); else { t.classList.toggle('on'); t.textContent = favs.has(d.fav) ? '♥' : '♡'; } }
+      else if (d.open) openSheet(d.open);
+      else if (d.cat) { S.cat = d.cat; renderCats(); S.render(); }
+      else if (d.inc) setQty(d.inc, 1); else if (d.dec) setQty(d.dec, -1);
+      else if (d.rm) { cart = cart.filter(c => c.id !== d.rm); saveCart(); updateCart(); }
+      else if (d.go) go(d.go);
+      else if (d.zoom) zoom(d.zoom);
+      else if (d.act === 'cart') { $('#menuPanel').classList.remove('open'); S.openCart(); }
+      else if (d.act === 'wa') S.chat();
+      else if (d.act === 'theme') E.toggleTheme();
+    });
+    $('#menuBtn').onclick = () => $('#menuPanel').classList.toggle('open');
+    $('#themeBtn').onclick = () => E.toggleTheme();
+    $('#cartBtn').onclick = S.openCart; $('#cartClose').onclick = closeCart;
+    $('#drawer').addEventListener('click', e => { if (e.target.id === 'drawer') closeCart(); });
+    $('#sheet').addEventListener('click', e => { if (e.target.id === 'sheet' || e.target.id === 'sheetClose') closeSheet(); });
+    $('#zoomViewer').addEventListener('click', e => { if (e.target.id !== 'zoomImage') $('#zoomViewer').classList.remove('open'); });
+    $('#waBtn').onclick = S.chat; $('#checkout').onclick = checkout;
+    $('#heroBtn').onclick = () => go('products'); $('#offerBtn').onclick = () => { S.cat = 'deal'; renderCats(); S.render(); go('products'); };
+    $('#seeAll').onclick = () => { S.cat = 'all'; renderCats(); S.render(); go('products'); };
+    $('#search').addEventListener('input', e => { S.q = e.target.value; S.render(); });
+    $('#searchBtn').onclick = () => { S.render(); go('products'); };
+    $('#search').addEventListener('keydown', e => { if (e.key === 'Enter') { go('products'); e.target.blur(); } });
+    $('#bSearch').onclick = () => { $('#search').scrollIntoView({ block: 'center' }); window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => $('#search').focus(), 350); };
+    $('#sort').onchange = e => { S.sort = e.target.value; S.render(); };
+    $('#favOnly').onclick = e => { S.favOnly = !S.favOnly; e.currentTarget.setAttribute('aria-pressed', S.favOnly); S.render(); };
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSheet(); closeCart(); $('#zoomViewer').classList.remove('open'); } });
+  };
+
+  S.load = data => {
+    S.products = data.products; S.settings = data.settings;
+    cart = cart.filter(c => byId(c.id));
+    S.applySettings(); S.render(); updateCart();
+    E.startPhone(S.products.filter(p => p.featured).concat(S.products.filter(p => !p.featured)), id => openSheet(id));
+  };
+})();
+
+</script>
+<script>
+/* Admin dashboard: control products, photos, categories, orders and every setting of the site. */
+(function () {
+  'use strict';
+  const E = window.Elion, $ = E.$, $$ = E.$$, esc = E.esc, api = E.api;
+  const A = { tab: 'dashboard', products: [], settings: {}, orders: [], stats: null, ed: null, filter: '', fcat: '', mounted: false, isDefault: false, dirty: false };
+  const root = () => $('#admin');
+  const TABS = [['dashboard', 'Dashboard', '▦'], ['products', 'Products', '📱'], ['orders', 'Orders', '🧾'], ['categories', 'Categories', '🏷'], ['site', 'Site', '🎨'], ['account', 'Account', '🔐']];
+  let refreshTimer;
+  const refreshShop = () => { clearTimeout(refreshTimer); refreshTimer = setTimeout(() => E.reloadStore && E.reloadStore().catch(() => {}), 250); };
+  const num = v => Number(String(v == null ? '' : v).replace(/[^0-9]/g, '')) || 0;
+  const catName = id => { const c = (A.settings.categories || []).find(x => x.id === id); return c ? c.label : (id || 'Other'); };
+  const fmtDate = iso => { const d = new Date(iso); return d.toLocaleDateString('en-NG', { day: 'numeric', month: 'short' }) + ', ' + d.toLocaleTimeString('en-NG', { hour: '2-digit', minute: '2-digit' }); };
+  const busy = async (btn, fn) => { if (btn) { btn.disabled = true; btn.dataset.t = btn.textContent; btn.textContent = 'Please wait…'; } try { return await fn(); } finally { if (btn) { btn.disabled = false; btn.textContent = btn.dataset.t; } } };
+  const fail = e => E.toast(e && e.message ? e.message : 'Something went wrong', true);
+
+  /* ------------------------------------------------ mount / login */
+  const A_ = E.admin = {};
+  A_.mount = async function () {
+    if (!A.mounted) { A.mounted = true; bind(); }
+    E.onLoggedOut = () => { if (!root().hidden) renderLogin('Your session ended. Please log in again.'); };
+    if (!api.hasToken()) return renderLogin();
+    try { const me = await api.get('api/me'); A.isDefault = !!me.isDefaultPassword; await loadAll(); renderShell(); }
+    catch (e) { api.setToken(null); renderLogin(); }
+  };
+  function renderLogin(msg) {
+    root().innerHTML = '<div class="adm-login"><form class="adm-card" id="loginForm"><img class="adm-logo" src="img/brand/logo.png" alt="Elion Phones">' +
+      '<h1>Admin login</h1><p class="muted">Enter your admin password to manage the store.</p>' + (msg ? '<p class="adm-msg err">' + esc(msg) + '</p>' : '') +
+      (E.isDemo() ? '<p class="adm-msg">Preview mode: changes are saved in this browser only. Password: <b>elion2026</b></p>' : '') +
+      '<label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required autofocus>' +
+      '<button class="adm-btn pri" type="submit">Log in</button><a class="adm-link" href="./" id="backShop">← Back to store</a></form></div>';
+    $('#backShop').onclick = e => { e.preventDefault(); E.closeAdmin(); };
+  }
+  async function doLogin(form) {
+    const pw = $('#pw').value;
+    try {
+      const r = await api.post('api/login', { password: pw });
+      api.setToken(r.token); A.isDefault = !!r.isDefaultPassword;
+      await loadAll(); renderShell(); E.toast('Welcome back');
+    } catch (e) { renderLogin(e.message); }
+  }
+  async function loadAll() {
+    const [store, orders, stats] = await Promise.all([api.get('api/store'), api.get('api/orders'), api.get('api/stats')]);
+    A.products = store.products; A.settings = store.settings; A.orders = orders.orders; A.stats = stats; A.dirty = false;
+  }
+
+  /* ------------------------------------------------ shell */
+  function renderShell() {
+    const newOrders = A.orders.filter(o => o.status === 'new').length;
+    root().innerHTML = '<div class="adm">' +
+      '<header class="adm-top"><img class="adm-logo sm" src="img/brand/logo.png" alt="Elion Phones"><span class="adm-pill">ADMIN</span><span class="grow"></span>' +
+      '<button class="adm-btn ghost" data-a="view">View store</button><button class="adm-btn ghost icon" data-a="theme" aria-label="Theme">◐</button><button class="adm-btn ghost" data-a="logout">Log out</button></header>' +
+      '<nav class="adm-tabs" role="tablist">' + TABS.map(t => '<button role="tab" class="' + (A.tab === t[0] ? 'on' : '') + '" data-tab="' + t[0] + '"><span>' + t[2] + '</span>' + t[1] + (t[0] === 'orders' && newOrders ? '<i class="badge">' + newOrders + '</i>' : '') + '</button>').join('') + '</nav>' +
+      '<main class="adm-main" id="admMain"></main></div><div id="admModal"></div>';
+    renderTab();
+  }
+  function renderTab() {
+    $$('.adm-tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === A.tab));
+    const m = $('#admMain'); if (!m) return;
+    m.innerHTML = { dashboard, products, orders, categories, site, account }[A.tab]();
+    if (A.tab === 'site') bindSiteDirty();
+  }
+
+  /* ------------------------------------------------ dashboard */
+  function dashboard() {
+    const s = A.stats || { days: [] }, max = Math.max(1, ...s.days.map(d => d.visits));
+    const noPhoto = A.products.filter(p => !p.images || !p.images.length).length, noPrice = A.products.filter(p => !p.price).length, out = A.products.filter(p => !p.inStock).length;
+    const tiles = [['Products', s.products, ''], ['In stock', s.inStock, ''], ['New orders', s.newOrders, s.newOrders ? 'hot' : ''], ['Visits today', (s.days[6] || {}).visits || 0, '']];
+    const alerts = [];
+    if (A.isDefault) alerts.push('<div class="adm-alert warn"><b>Change your password.</b> You are still using the starter password. <button class="adm-btn sm" data-tab="account">Change now</button></div>');
+    if (E.isDemo()) alerts.push('<div class="adm-alert"><b>Preview mode.</b> This copy has no server, so changes are kept in this browser only. Run the project on your host (see README) to save for every visitor.</div>');
+    if (noPhoto) alerts.push('<div class="adm-alert">' + noPhoto + ' product' + (noPhoto > 1 ? 's have' : ' has') + ' no photo.</div>');
+    if (noPrice) alerts.push('<div class="adm-alert">' + noPrice + ' product' + (noPrice > 1 ? 's show' : ' shows') + ' “Call for price”. Add prices in Products.</div>');
+    if (out) alerts.push('<div class="adm-alert">' + out + ' product' + (out > 1 ? 's are' : ' is') + ' marked sold out.</div>');
+    return alerts.join('') +
+      '<div class="adm-tiles">' + tiles.map(t => '<div class="adm-tile ' + t[2] + '"><small>' + t[0] + '</small><strong>' + t[1] + '</strong></div>').join('') + '</div>' +
+      '<section class="adm-card"><h3>Visitors, last 7 days</h3><div class="adm-bars">' + s.days.map(d => '<div><i style="height:' + Math.max(4, Math.round(d.visits / max * 100)) + '%"></i><b>' + d.visits + '</b><small>' + new Date(d.day + 'T12:00:00').toLocaleDateString('en', { weekday: 'short' }) + '</small></div>').join('') + '</div></section>' +
+      '<section class="adm-card"><h3>Shortcuts</h3><div class="adm-row wrap"><button class="adm-btn pri" data-a="add">+ Add product</button><button class="adm-btn" data-tab="site">Edit site text and look</button><button class="adm-btn" data-tab="categories">Manage categories</button><button class="adm-btn" data-a="view">View store</button></div></section>' +
+      '<p class="muted small">Stock value (listed prices of items in stock): <b>' + E.money(s.stockValue) + '</b></p>';
+  }
+
+  /* ------------------------------------------------ products */
+  function filtered() {
+    const q = A.filter.toLowerCase().trim();
+    return A.products.filter(p => (!A.fcat || p.category === A.fcat) && (!q || (p.name + ' ' + p.spec + ' ' + p.tag).toLowerCase().includes(q)));
+  }
+  function products() {
+    const list = filtered(), canMove = !A.filter && !A.fcat;
+    return '<div class="adm-bar"><input id="pf" type="search" placeholder="Search products…" value="' + esc(A.filter) + '"><select id="pc"><option value="">All categories</option>' +
+      (A.settings.categories || []).map(c => '<option value="' + esc(c.id) + '"' + (A.fcat === c.id ? ' selected' : '') + '>' + esc(c.label) + '</option>').join('') + '</select>' +
+      '<button class="adm-btn pri" data-a="add">+ Add product</button></div>' +
+      '<p class="muted small">' + list.length + ' of ' + A.products.length + ' products' + (canMove ? '. Use the arrows to change the order shoppers see.' : '. Clear the filters to reorder.') + '</p>' +
+      '<div class="adm-list">' + (list.map((p, i) => row(p, i, list.length, canMove)).join('') || '<div class="adm-empty">No products here yet. Tap “Add product”.</div>') + '</div>';
+  }
+  function row(p, i, n, canMove) {
+    return '<div class="adm-item" data-id="' + esc(p.id) + '"><button class="thumb" data-edit="' + esc(p.id) + '" aria-label="Edit ' + esc(p.name) + '">' + (p.images && p.images[0] ? '<img loading="lazy" src="' + esc(p.images[0]) + '" alt="">' : '<span>No photo</span>') + (p.images && p.images.length > 1 ? '<i>' + p.images.length + '</i>' : '') + '</button>' +
+      '<div class="meta" data-edit="' + esc(p.id) + '"><strong>' + esc(p.name) + '</strong><small>' + esc(p.spec) + '</small>' +
+      '<div class="chips"><b class="price">' + (p.price ? E.money(p.price) : 'Call for price') + '</b><span>' + esc(catName(p.category)) + '</span>' + (p.deal ? '<span class="y">Deal</span>' : '') + (p.featured ? '<span class="y">Featured</span>' : '') + (!p.inStock ? '<span class="r">Sold out</span>' : '') + '</div></div>' +
+      '<div class="acts"><label class="sw" title="In stock"><input type="checkbox" data-stock="' + esc(p.id) + '"' + (p.inStock ? ' checked' : '') + '><i></i></label>' +
+      (canMove ? '<button class="adm-btn ghost icon" data-mv="up" data-id="' + esc(p.id) + '"' + (i === 0 ? ' disabled' : '') + ' aria-label="Move up">▲</button><button class="adm-btn ghost icon" data-mv="down" data-id="' + esc(p.id) + '"' + (i === n - 1 ? ' disabled' : '') + ' aria-label="Move down">▼</button>' : '') +
+      '<button class="adm-btn ghost icon del" data-del="' + esc(p.id) + '" aria-label="Delete">🗑</button></div></div>';
+  }
+  async function move(id, dir) {
+    const i = A.products.findIndex(p => p.id === id), j = i + (dir === 'up' ? -1 : 1);
+    if (j < 0 || j >= A.products.length) return;
+    [A.products[i], A.products[j]] = [A.products[j], A.products[i]];
+    renderTab();
+    try { await api.post('api/products/reorder', { ids: A.products.map(p => p.id) }); refreshShop(); } catch (e) { fail(e); }
+  }
+  let delArm = null;
+  async function del(btn, id) {
+    if (delArm !== id) { delArm = id; btn.classList.add('arm'); btn.textContent = 'Delete?'; setTimeout(() => { if (delArm === id) { delArm = null; if (btn.isConnected) { btn.classList.remove('arm'); btn.textContent = '🗑'; } } }, 3000); return; }
+    delArm = null;
+    try { await api.del('api/products/' + encodeURIComponent(id)); A.products = A.products.filter(p => p.id !== id); renderTab(); refreshShop(); E.toast('Product deleted'); } catch (e) { fail(e); }
+  }
+
+  /* ------------------------------------------------ product editor */
+  function openEditor(id) {
+    const p = id ? A.products.find(x => x.id === id) : null;
+    A.ed = p ? JSON.parse(JSON.stringify(p)) : { name: '', spec: '', price: 0, oldPrice: 0, category: (A.settings.categories[0] || {}).id || 'other', tag: '', inStock: true, featured: false, deal: false, rating: 4.8, images: [] };
+    const cats = (A.settings.categories || []).map(c => '<option value="' + esc(c.id) + '"' + (A.ed.category === c.id ? ' selected' : '') + '>' + esc(c.label) + '</option>').join('') + '<option value="other"' + (A.ed.category === 'other' ? ' selected' : '') + '>Other</option>';
+    $('#admModal').innerHTML = '<div class="adm-modal" id="edModal"><form class="adm-sheet" id="edForm" novalidate>' +
+      '<div class="adm-sheet-h"><h2>' + (p ? 'Edit product' : 'Add product') + '</h2><button type="button" class="adm-btn ghost icon" data-a="closeEd" aria-label="Close">✕</button></div>' +
+      '<div class="adm-sheet-b"><label>Photos <small class="muted">First photo is the main one. You can add up to 8.</small></label><div id="photos" class="photos"></div>' +
+      '<label for="f_name">Name</label><input id="f_name" value="' + esc(A.ed.name) + '" placeholder="iPhone 15 Pro Max" required>' +
+      '<label for="f_spec">Details</label><input id="f_spec" value="' + esc(A.ed.spec) + '" placeholder="256GB • Brand New • Natural Titanium">' +
+      '<div class="two"><div><label for="f_price">Price (' + esc(A.settings.currency || '₦') + ')</label><input id="f_price" inputmode="numeric" value="' + (A.ed.price || '') + '" placeholder="0 = call for price"></div>' +
+      '<div><label for="f_old">Old price <small class="muted">(optional, shown crossed out)</small></label><input id="f_old" inputmode="numeric" value="' + (A.ed.oldPrice || '') + '"></div></div>' +
+      '<div class="two"><div><label for="f_cat">Category</label><select id="f_cat">' + cats + '</select></div><div><label for="f_tag">Badge <small class="muted">(Hot, New…)</small></label><input id="f_tag" maxlength="24" value="' + esc(A.ed.tag) + '"></div></div>' +
+      '<div class="two"><div><label for="f_rating">Rating (0 to 5)</label><input id="f_rating" inputmode="decimal" value="' + (A.ed.rating || '') + '"></div></div>' +
+      '<div class="checks"><label class="chk"><input type="checkbox" id="f_stock"' + (A.ed.inStock ? ' checked' : '') + '> In stock</label><label class="chk"><input type="checkbox" id="f_deal"' + (A.ed.deal ? ' checked' : '') + '> Best deal</label><label class="chk"><input type="checkbox" id="f_feat"' + (A.ed.featured ? ' checked' : '') + '> Featured (shows first on the 3D phone)</label></div></div>' +
+      '<div class="adm-sheet-f"><button type="button" class="adm-btn" data-a="closeEd">Cancel</button><button type="submit" class="adm-btn pri">' + (p ? 'Save changes' : 'Add product') + '</button></div></form></div>';
+    document.body.classList.add('adm-lock');
+    renderPhotos();
+  }
+  function renderPhotos() {
+    const box = $('#photos'); if (!box) return;
+    box.innerHTML = A.ed.images.map((u, i) => '<div class="ph' + (i === 0 ? ' main' : '') + '"><img src="' + esc(u) + '" alt=""><span>' + (i === 0 ? 'Main' : '') + '</span>' +
+      '<div>' + (i > 0 ? '<button type="button" data-ph="main" data-i="' + i + '" title="Make main">★</button>' : '') + '<button type="button" data-ph="rm" data-i="' + i + '" title="Remove">✕</button></div></div>').join('') +
+      (A.ed.images.length < 8 ? '<label class="ph add" for="f_files"><b>+</b><small>Add photos</small></label>' : '') + '<input id="f_files" type="file" accept="image/*" multiple hidden>';
+    const fi = $('#f_files'); if (fi) fi.onchange = e => addFiles(e.target.files);
+  }
+  async function addFiles(files) {
+    files = Array.from(files || []).slice(0, 8 - A.ed.images.length); if (!files.length) return;
+    const box = $('#photos'); box.classList.add('loading');
+    for (const f of files) { try { A.ed.images.push(await api.upload(f)); renderPhotos(); } catch (e) { fail(e); } }
+    box.classList.remove('loading'); renderPhotos();
+  }
+  async function saveProduct(form) {
+    const d = A.ed, v = id => $('#' + id).value;
+    const body = { name: v('f_name').trim(), spec: v('f_spec').trim(), price: num(v('f_price')), oldPrice: num(v('f_old')), category: v('f_cat'), tag: v('f_tag').trim(), rating: Math.min(5, Math.max(0, parseFloat(v('f_rating')) || 0)),
+      inStock: $('#f_stock').checked, deal: $('#f_deal').checked, featured: $('#f_feat').checked, images: d.images };
+    if (!body.name) { $('#f_name').focus(); return E.toast('Please enter a product name', true); }
+    const btn = $('button[type=submit]', form);
+    await busy(btn, async () => {
+      try {
+        if (d.id) { const r = await api.put('api/products/' + encodeURIComponent(d.id), body); A.products = A.products.map(p => p.id === d.id ? r : p); }
+        else { const r = await api.post('api/products', body); A.products.unshift(r); }
+        closeEditor(); renderTab(); refreshShop(); E.toast(d.id ? 'Saved' : 'Product added');
+      } catch (e) { fail(e); }
+    });
+  }
+  function closeEditor() { $('#admModal').innerHTML = ''; document.body.classList.remove('adm-lock'); A.ed = null; }
+
+  /* ------------------------------------------------ orders */
+  function orders() {
+    if (!A.orders.length) return '<div class="adm-empty">No orders yet. When a shopper taps “Order on WhatsApp”, the cart shows up here so you can follow up.</div>';
+    return '<div class="adm-orders">' + A.orders.map(o => '<article class="adm-card order ' + o.status + '"><div class="adm-row between"><b>' + fmtDate(o.at) + '</b><select data-ostatus="' + esc(o.id) + '">' +
+      [['new', 'New'], ['contacted', 'Contacted'], ['done', 'Done']].map(s => '<option value="' + s[0] + '"' + (o.status === s[0] ? ' selected' : '') + '>' + s[1] + '</option>').join('') + '</select></div>' +
+      '<ul>' + o.items.map(i => '<li><span>' + esc(i.name) + ' <small>' + esc(i.spec) + '</small></span><b>' + (i.price ? E.money(i.price) + (i.qty > 1 ? ' × ' + i.qty : '') : 'ask') + '</b></li>').join('') + '</ul>' +
+      '<div class="adm-row between"><strong>Total ' + E.money(o.total) + '</strong><button class="adm-btn ghost sm" data-odel="' + esc(o.id) + '">Delete</button></div></article>').join('') + '</div>';
+  }
+
+  /* ------------------------------------------------ categories */
+  function categories() {
+    const cats = A.settings.categories || [];
+    return '<p class="muted small">These are the buttons shoppers use to filter products. “All” and “Best Deals” are always there.</p><section class="adm-card"><div id="catList">' +
+      cats.map((c, i) => '<div class="adm-cat" data-i="' + i + '"><input value="' + esc(c.label) + '" data-catname="' + i + '" maxlength="30" aria-label="Category name"><small class="muted">' + A.products.filter(p => p.category === c.id).length + ' items</small>' +
+        '<button class="adm-btn ghost icon" data-cm="up" data-i="' + i + '"' + (i === 0 ? ' disabled' : '') + '>▲</button><button class="adm-btn ghost icon" data-cm="down" data-i="' + i + '"' + (i === cats.length - 1 ? ' disabled' : '') + '>▼</button><button class="adm-btn ghost icon del" data-cdel="' + i + '">🗑</button></div>').join('') +
+      '</div><div class="adm-row wrap" style="margin-top:12px"><input id="newCat" placeholder="New category, e.g. Laptops" maxlength="30"><button class="adm-btn" data-a="addCat">Add</button></div></section>' +
+      '<div class="adm-row"><button class="adm-btn pri" data-a="saveCats">Save categories</button></div>';
+  }
+  async function saveCats() {
+    const cats = A.settings.categories.filter(c => c.label.trim());
+    try {
+      const r = await api.put('api/settings', { categories: cats.map(c => ({ id: c.id, label: c.label.trim() })) });
+      A.settings = r; renderTab(); refreshShop(); E.toast('Categories saved');
+    } catch (e) { fail(e); }
+  }
+
+  /* ------------------------------------------------ site settings */
+  const fld = (k, label, type, hint) => '<label for="s_' + k + '">' + label + (hint ? ' <small class="muted">' + hint + '</small>' : '') + '</label>' +
+    (type === 'area' ? '<textarea id="s_' + k + '" data-k="' + k + '" rows="3">' + esc(A.settings[k]) + '</textarea>' : '<input id="s_' + k + '" data-k="' + k + '" value="' + esc(A.settings[k]) + '">');
+  const tog = (k, label) => '<label class="chk"><input type="checkbox" data-k="' + k + '"' + (A.settings[k] !== false ? ' checked' : '') + '> ' + label + '</label>';
+  function imgField(k, label, hint) {
+    const u = A.settings[k];
+    return '<label>' + label + ' <small class="muted">' + hint + '</small></label><div class="imgfield"><div class="prev">' + (u ? '<img src="' + esc(u) + '" alt="">' : '<span>Default</span>') + '</div>' +
+      '<label class="adm-btn" for="u_' + k + '">Upload</label><input id="u_' + k + '" type="file" accept="image/*" hidden data-up="' + k + '">' + (u ? '<button class="adm-btn ghost" data-a="clr" data-k="' + k + '">Use default</button>' : '') + '</div>';
+  }
+  function site() {
+    const s = A.settings;
+    return '<div class="adm-savebar" id="saveBar"><span>You have unsaved changes</span><button class="adm-btn pri" data-a="saveSite">Save changes</button></div>' +
+      '<section class="adm-card"><h3>Brand</h3>' + fld('storeName', 'Store name') + fld('tagline', 'Tagline') + imgField('logoUrl', 'Logo', 'Leave as default to keep the animated Elion logo') +
+      '<div class="two"><div><label for="s_accent">Accent colour</label><input id="s_accent" data-k="accent" type="color" value="' + esc(s.accent || '#8be44d') + '"></div><div><label for="s_theme">Default theme</label><select id="s_theme" data-k="theme">' +
+      [['auto', 'Follow the phone'], ['light', 'Light'], ['dark', 'Dark']].map(o => '<option value="' + o[0] + '"' + (s.theme === o[0] ? ' selected' : '') + '>' + o[1] + '</option>').join('') + '</select></div></div>' +
+      '<div class="checks">' + tog('showSplash', 'Show the logo animation on opening') + tog('show3d', 'Show the rotating 3D phone') + tog('showRatings', 'Show star ratings on products') + '</div></section>' +
+      '<section class="adm-card"><h3>Home banner</h3>' + fld('heroKicker', 'Small title above') +
+      '<div class="two"><div>' + fld('heroLine1', 'Headline, line 1') + '</div><div>' + fld('heroAccent', 'Highlighted word') + '</div></div>' + fld('heroLine2', 'Headline, line 2') + fld('heroText', 'Paragraph', 'area') + fld('heroButton', 'Button text') +
+      imgField('heroImage', 'Background photo', 'Wide shop photo works best') + '</section>' +
+      '<section class="adm-card"><h3>Scrolling strip and offer box</h3><label for="s_ticker">Strip messages <small class="muted">one per line</small></label><textarea id="s_ticker" data-k="ticker" rows="5">' + esc((s.ticker || []).join('\n')) + '</textarea>' +
+      fld('offerTitle', 'Offer title') + fld('offerText', 'Offer text') + fld('offerButton', 'Offer button') + '</section>' +
+      '<section class="adm-card"><h3>Contact</h3>' + fld('whatsapp', 'WhatsApp number', '', 'with country code, e.g. 2349061845524') + fld('phone', 'Phone number') + fld('address', 'Shop address') + fld('hours', 'Opening hours') + fld('instagram', 'Instagram or social handle') + fld('footerText', 'Footer text', 'area') + '</section>' +
+      '<div class="adm-row"><button class="adm-btn pri" data-a="saveSite">Save changes</button><button class="adm-btn" data-a="view">View store</button></div>';
+  }
+  function bindSiteDirty() {
+    const mark = () => { A.dirty = true; const b = $('#saveBar'); if (b) b.classList.add('show'); };
+    $$('#admMain input[data-k], #admMain textarea[data-k], #admMain select[data-k]').forEach(el => el.addEventListener('input', mark));
+  }
+  async function saveSite(btn) {
+    const out = {};
+    $$('#admMain input[data-k], #admMain textarea[data-k], #admMain select[data-k]').forEach(el => {
+      const k = el.dataset.k;
+      if (el.type === 'checkbox') out[k] = el.checked;
+      else if (k === 'ticker') out[k] = el.value.split('\n').map(x => x.trim()).filter(Boolean);
+      else out[k] = el.value;
+    });
+    await busy(btn, async () => {
+      try { A.settings = await api.put('api/settings', out); A.dirty = false; renderTab(); refreshShop(); E.toast('Site updated'); } catch (e) { fail(e); }
+    });
+  }
+  async function uploadSetting(k, file) {
+    if (!file) return;
+    try {
+      const url = await api.upload(file, { max: k === 'logoUrl' ? 700 : 1800, png: k === 'logoUrl' });
+      A.settings = await api.put('api/settings', { [k]: url }); renderTab(); refreshShop(); E.toast('Image updated');
+    } catch (e) { fail(e); }
+  }
+
+  /* ------------------------------------------------ account */
+  function account() {
+    return '<section class="adm-card"><h3>Change password</h3><form id="pwForm" autocomplete="off"><label for="pw1">Current password</label><input id="pw1" type="password" autocomplete="current-password" required>' +
+      '<label for="pw2">New password <small class="muted">at least 6 characters</small></label><input id="pw2" type="password" autocomplete="new-password" required minlength="6"><button class="adm-btn pri" type="submit">Update password</button></form></section>' +
+      '<section class="adm-card"><h3>Backup and restore</h3><p class="muted small">A backup holds your products, categories, settings and orders. Photos you uploaded stay on the server in the data folder.</p>' +
+      '<div class="adm-row wrap"><button class="adm-btn" data-a="backup">Download backup</button><button class="adm-btn" data-a="copyBackup">Copy backup text</button><label class="adm-btn" for="restoreFile">Restore from file</label><input id="restoreFile" type="file" accept="application/json,.json" hidden></div></section>' +
+      (E.isDemo() ? '<section class="adm-card"><h3>Preview data</h3><p class="muted small">Put the sample products back the way they were.</p><button class="adm-btn" data-a="resetDemo">Reset preview data</button></section>' : '');
+  }
+  async function backup(copy) {
+    try {
+      let text;
+      if (E.isDemo()) text = JSON.stringify(await api.get('api/backup'), null, 1);
+      else { const r = await fetch('api/backup', { headers: { Authorization: 'Bearer ' + localStorage.getItem('elion_token') } }); if (!r.ok) throw new Error('Could not create backup'); text = await r.text(); }
+      if (copy) { try { await navigator.clipboard.writeText(text); E.toast('Backup copied'); } catch (e) { E.toast('Copy is blocked here. Use Download.', true); } return; }
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.download = 'elion-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a); a.click(); a.remove(); E.toast('Backup downloaded');
+    } catch (e) { fail(e); }
+  }
+  async function restore(file) {
+    if (!file) return;
+    try { const data = JSON.parse(await file.text()); const r = await api.post('api/restore', data); await loadAll(); renderShell(); refreshShop(); E.toast('Restored ' + r.products + ' products'); }
+    catch (e) { fail(e.name === 'SyntaxError' ? new Error('That file is not a valid backup') : e); }
+  }
+
+  /* ------------------------------------------------ events */
+  function bind() {
+    const R = root();
+    R.addEventListener('submit', e => {
+      e.preventDefault();
+      if (e.target.id === 'loginForm') doLogin(e.target);
+      else if (e.target.id === 'pwForm') {
+        api.post('api/password', { current: $('#pw1').value, next: $('#pw2').value }).then(() => { A.isDefault = false; e.target.reset(); E.toast('Password updated'); }).catch(fail);
+      }
+    });
+    document.addEventListener('submit', e => { if (e.target.id === 'edForm') { e.preventDefault(); saveProduct(e.target); } });
+    document.addEventListener('click', async e => {
+      if ($('#admin').hidden) return;
+      const t = e.target.closest('[data-a],[data-tab],[data-edit],[data-mv],[data-del],[data-ph],[data-cm],[data-cdel],[data-odel]'); if (!t) { if (e.target.id === 'edModal') closeEditor(); return; }
+      const d = t.dataset;
+      if (d.tab) { A.tab = d.tab; renderTab(); window.scrollTo(0, 0); }
+      else if (d.edit) openEditor(d.edit);
+      else if (d.mv) move(d.id, d.mv);
+      else if (d.del) del(t, d.del);
+      else if (d.ph) { const i = +d.i; if (d.ph === 'rm') A.ed.images.splice(i, 1); else A.ed.images.unshift(A.ed.images.splice(i, 1)[0]); renderPhotos(); }
+      else if (d.cm) { const c = A.settings.categories, i = +d.i, j = i + (d.cm === 'up' ? -1 : 1); [c[i], c[j]] = [c[j], c[i]]; renderTab(); }
+      else if (d.cdel) { A.settings.categories.splice(+d.cdel, 1); renderTab(); }
+      else if (d.odel) { try { await api.del('api/orders/' + d.odel); A.orders = A.orders.filter(o => o.id !== d.odel); renderTab(); E.toast('Order deleted'); } catch (x) { fail(x); } }
+      else switch (d.a) {
+        case 'view': E.closeAdmin(); break;
+        case 'theme': E.toggleTheme(); break;
+        case 'logout': api.setToken(null); renderLogin(); break;
+        case 'add': openEditor(); break;
+        case 'closeEd': closeEditor(); break;
+        case 'addCat': { const el = $('#newCat'), v = el.value.trim(); if (!v) return; let id = E.slug(v), n = 1; while (A.settings.categories.some(c => c.id === id)) id = E.slug(v) + '-' + (++n); A.settings.categories.push({ id, label: v }); renderTab(); break; }
+        case 'saveCats': saveCats(); break;
+        case 'saveSite': saveSite(t); break;
+        case 'clr': { const k = d.k; try { A.settings = await api.put('api/settings', { [k]: '' }); renderTab(); refreshShop(); E.toast('Back to default'); } catch (x) { fail(x); } break; }
+        case 'backup': backup(false); break;
+        case 'copyBackup': backup(true); break;
+        case 'resetDemo': try { await api.post('api/reset-demo'); await loadAll(); renderShell(); refreshShop(); E.toast('Preview data reset'); } catch (x) { fail(x); } break;
+      }
+    });
+    document.addEventListener('change', async e => {
+      if ($('#admin').hidden) return; const t = e.target;
+      if (t.dataset.stock) { const p = A.products.find(x => x.id === t.dataset.stock); try { const r = await api.put('api/products/' + encodeURIComponent(p.id), Object.assign({}, p, { inStock: t.checked })); Object.assign(p, r); renderTab(); refreshShop(); E.toast(t.checked ? 'Marked in stock' : 'Marked sold out'); } catch (x) { fail(x); t.checked = !t.checked; } }
+      else if (t.dataset.ostatus) { try { await api.patch('api/orders/' + t.dataset.ostatus, { status: t.value }); const o = A.orders.find(x => x.id === t.dataset.ostatus); o.status = t.value; renderTab(); const b = $('.adm-tabs [data-tab=orders]'); } catch (x) { fail(x); } }
+      else if (t.dataset.up) uploadSetting(t.dataset.up, t.files[0]);
+      else if (t.id === 'restoreFile') restore(t.files[0]);
+      else if (t.id === 'pc') { A.fcat = t.value; renderTab(); }
+      else if (t.dataset.catname !== undefined) { A.settings.categories[+t.dataset.catname].label = t.value; }
+    });
+    document.addEventListener('input', e => {
+      if ($('#admin').hidden) return;
+      if (e.target.id === 'pf') { A.filter = e.target.value; const pos = e.target.selectionStart; renderTab(); const el = $('#pf'); el.focus(); el.setSelectionRange(pos, pos); }
+      else if (e.target.dataset.catname !== undefined) A.settings.categories[+e.target.dataset.catname].label = e.target.value;
+    });
+    // drag and drop photos onto the editor
+    document.addEventListener('dragover', e => { if (A.ed && e.target.closest('#photos')) e.preventDefault(); });
+    document.addEventListener('drop', e => { if (A.ed && e.target.closest('#photos')) { e.preventDefault(); addFiles(e.dataTransfer.files); } });
+    window.addEventListener('beforeunload', e => { if (A.dirty && !$('#admin').hidden) { e.preventDefault(); e.returnValue = ''; } });
+  }
+})();
+
+</script>
+<script>
+/* Start-up: pick server or demo data, run the logo intro, show the shop or the admin. */
+(function () {
+  'use strict';
+  const E = window.Elion, $ = E.$;
+  const isAdminRoute = () => /\/admin\/?$/.test(location.pathname) || location.hash === '#admin';
+
+  /* ---- logo intro ---- */
+  const splash = $('#splash');
+  let splashDone = false;
+  function endSplash() {
+    if (splashDone) return; splashDone = true;
+    splash.classList.add('out');
+    setTimeout(() => splash.remove(), 900);
+  }
+  function runSplash() {
+    let seen = false; try { seen = sessionStorage.getItem('elion_splash') === '1'; } catch (e) {}
+    if (isAdminRoute() || seen) { splash.remove(); splashDone = true; return; }
+    try { sessionStorage.setItem('elion_splash', '1'); } catch (e) {}
+    const imgs = Array.from(splash.querySelectorAll('img'));
+    const ready = Promise.all(imgs.map(i => i.decode ? i.decode().catch(() => {}) : Promise.resolve()));
+    const start = () => splash.classList.add('go');
+    Promise.race([ready, new Promise(r => setTimeout(r, 1200))]).then(start);
+    splash.addEventListener('click', endSplash);
+    setTimeout(endSplash, 3900);
+  }
+  runSplash();
+
+  /* ---- routing ---- */
+  function route() {
+    const admin = isAdminRoute();
+    document.documentElement.classList.toggle('is-admin', admin);
+    $('#admin').hidden = !admin;
+    if (admin) { E.admin.mount(); window.scrollTo(0, 0); }
+  }
+  E.openAdmin = () => { if (/\/admin\/?$/.test(location.pathname)) { route(); } else { location.hash = '#admin'; } };
+  E.closeAdmin = () => {
+    if (/\/admin\/?$/.test(location.pathname)) { location.href = './'; return; }
+    history.replaceState(null, '', location.pathname + location.search); route();
+  };
+  window.addEventListener('hashchange', route);
+
+  /* ---- load ---- */
+  E.reloadStore = async () => { const data = await E.api.get('api/store'); E.shop.load(data); return data; };
+  (async function () {
+    $('#grid').innerHTML = '<div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>';
+    await E.api.detect();
+    let data;
+    try { data = await E.api.get('api/store'); }
+    catch (e) { $('#grid').innerHTML = ''; $('#empty').style.display = 'block'; $('#empty').textContent = 'Could not load products. Please refresh.'; endSplash(); return; }
+    E.applyDefaultTheme(data.settings);
+    E.settings = data.settings;
+    E.shop.bind(); E.shop.load(data);
+    if (data.settings.showSplash === false) endSplash();
+    try { if (!sessionStorage.getItem('elion_visit')) { sessionStorage.setItem('elion_visit', '1'); E.api.post('api/visit').catch(() => {}); } } catch (e) {}
+    route();
+    if ('serviceWorker' in navigator && false) navigator.serviceWorker.register('sw.js');
+  })();
+})();
+
+</script>
+</body>
+</html>
